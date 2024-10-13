@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Nunito_Sans } from 'next/font/google';
+const nunitoSans = Nunito_Sans({ subsets: ["latin"], weight: "700" });
+
 import "./globals.css";
 import { ClerkProvider, ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
-import { dark } from "@clerk/themes";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,14 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
+    <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
           <ClerkLoading>
-            <div className="flex items-center justify-center h-screen text-2xl">
-              LOADING...
+            <div className="flex items-center justify-center h-screen">
+              <span className="styled-text">Striide</span>
             </div>
           </ClerkLoading>
+
           <ClerkLoaded>
             <div className="max-w-6xl mx-auto">
               <div className="flex flex-col h-screen">

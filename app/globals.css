@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 body {
-  background-color: rgb(23, 23, 23);
-  color: white;
+  background: linear-gradient(90deg, #802EE8 0%, #5044F1 100%);
 }
+
+.styled-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 64px;
+  line-height: 77.45px;
+  color: white;
+  text-align: center;
+}
+

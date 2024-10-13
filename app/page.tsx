@@ -1,9 +1,28 @@
-import Image from "next/image";
+import React from "react";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center h-full">
-      <div className="text-2xl">Home Page</div>
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#802EE8] to-[#5044F1] text-white px-4">
+      <div className="text-center max-w-lg mb-8">
+        <h1 className="text-[30px] font-bold italic mb-6">
+          Welcome to <span className="font-bold italic">Striide</span>
+        </h1>
+        <p className="text-lg mb-4">
+          Join us in building a connected and aware community where we look out for each other.
+        </p>
+        <p className="text-lg mb-10">
+          Welcome to Version 1! It’s not perfect, but with your help, we can make it amazing.
+        </p>
+      </div>
+      <div className="w-full max-w-sm flex flex-col gap-4">
+        <Link href="/sign-up" className="bg-white text-[#5044F1] font-semibold py-2 rounded-lg text-center">
+          Sign up
+        </Link>
+        <Link href="/sign-in" className="border border-white text-white font-semibold py-2 rounded-lg text-center">
+          Log in
+        </Link>
+      </div>
     </div>
   );
 }
