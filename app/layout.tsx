@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Nunito_Sans } from 'next/font/google';
 const nunitoSans = Nunito_Sans({ subsets: ["latin"], weight: "700" });
+import { dark, shadesOfPurple } from '@clerk/themes'
 
 import "./globals.css";
 import { ClerkProvider, ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
@@ -20,7 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: shadesOfPurple,
+      }}
+    >
       <html lang="en">
         <body className={inter.className}>
           <ClerkLoading>
