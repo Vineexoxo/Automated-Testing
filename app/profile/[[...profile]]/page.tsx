@@ -13,6 +13,8 @@ const Profile = async () => {
     return null;
   }
 
+  console.log(user);
+
   const loggedInUser = await prisma.user.findUnique({
     where: {clerkUserId: user.id},
   });
