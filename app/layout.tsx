@@ -35,9 +35,8 @@ export default function RootLayout({
           </ClerkLoading>
 
           <ClerkLoaded>
-            <div className="max-w-6xl mx-auto">
-              <div className="flex flex-col h-screen">
-                <Navbar />
+            <div className="flex flex-col items-center justify-center h-screen">
+              <div className="w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl">
                 {children}
               </div>
             </div>
