@@ -1,18 +1,96 @@
+"use client"; // Add this line to mark the component as a Client Component
+
 import React from 'react';
+import { useRouter } from 'next/navigation'; // Change the import to next/navigation
 
 const Page = () => {
+  const router = useRouter();
+
+  // Handler for navigating to the next page
+  const handleNextPage = () => {
+    router.push('/almost-there-2'); // Update the route to match your folder structure
+  };
+
   return (
-    <div className="bg-[#590BBE] h-screen flex items-center justify-center text-center text-white">
-      <div className="w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl flex flex-col items-center">
-        <div className="font-montserrat text-2xl italic font-bold leading-[36.57px] mb-5">
-          Striide
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-tr from-[#3A00A4]  to-[#802EE8] text-white px-4">
+      <div className="w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl flex flex-col">
+        
+        {/* Wrapper for Striide with inline style for top margin */}
+        <div style={{ paddingTop : '1rem'}}>
+          <div className="text-center font-bold text-white text-3xl italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>Striide</div>
         </div>
-        <div className="self-start ml-5 mb-5 text-xl font-bold">
-          HELLO!
+
+        {/* Wrapper for HELLO! aligned to the left */}
+        <div style={{ marginTop: '6rem', marginLeft: '3rem', marginBottom:'12rem' }}>
+          <div className="text-6xl font-extrabold" style={{ fontFamily: 'Montserrat, sans-serif' }}>HELLO!</div>
         </div>
-        <div className="text-lg leading-6">
-          We're building this for you! Tell us a bit about yourself so we can tailor the experience to you!
+
+        {/* Wrapper for Additional Text Section centered */}
+        <div style={{ marginTop : '1rem', marginBottom: '5rem', marginLeft: '3rem', paddingRight: '3rem' }}>
+          <div style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '1.4rem' }}>
+            <div>We're building this for you!</div>
+            <div>Tell us a bit about yourself so we can tailor the experience to you.</div>
+          </div>
         </div>
+
+        {/* Arrow icons */}
+        <div className="flex justify-end" style={{ marginBottom: '2rem', paddingRight: '1rem' }}> 
+          <div className="flex -space-x-8"> 
+            {/* Arrow with smooth hover effect */}
+            <div onClick={handleNextPage} className="cursor-pointer">
+              <svg 
+                width="60" 
+                height="60" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="transition-transform duration-300 hover:scale-110">
+                <path 
+                  d="M8 4l8 8-8 8" 
+                  stroke="rgba(255, 255, 255, 0.6)" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  className="transition-all duration-300" />
+              </svg>
+            </div>
+
+            <div onClick={handleNextPage} className="cursor-pointer">
+              <svg 
+                width="60" 
+                height="60" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="transition-transform duration-300 hover:scale-110">
+                <path 
+                  d="M8 4l8 8-8 8" 
+                  stroke="rgba(255, 255, 255, 0.8)" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  className="transition-all duration-300" />
+              </svg>
+            </div>
+
+            <div onClick={handleNextPage} className="cursor-pointer">
+              <svg 
+                width="60" 
+                height="60" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="transition-transform duration-300 hover:scale-110">
+                <path 
+                  d="M8 4l8 8-8 8" 
+                  stroke="rgba(255, 255, 255, 1)" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  className="transition-all duration-300" />
+              </svg>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
   );

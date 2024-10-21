@@ -3,9 +3,10 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#802EE8] to-[#5044F1] text-white px-4">
+
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-tr from-[#3A00A4]  to-[#802EE8] text-white px-4">
       <div className="text-center max-w-lg mb-8">
-        <h1 className="text-[30px] font-bold italic mb-6">
+        <h1 className="text-[30px] font-bold mb-6">
           Welcome to <span className="font-bold italic">Striide</span>
         </h1>
         <p className="text-lg mb-4">
