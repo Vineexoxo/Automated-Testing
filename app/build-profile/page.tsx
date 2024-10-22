@@ -35,7 +35,7 @@ const Page = () => {
       {/* Wrapper for the second div */}
       <div style={{ marginTop: '1rem' }}>
         <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}> {/* Set font to Nunito Sans */}
-          <div>Lets build your profile!</div>
+          <div>Please complete your profile!</div>
           <div>This information will be <span style={{ color: '#FFBF42' }}>public</span> and will help you connect with people.</div>
         </div>
       </div>
@@ -92,9 +92,9 @@ const Page = () => {
                   className="w-full p-2 bg-transparent border-none outline-none text-[#9E88B2] pl-2 pr-8 appearance-none" // Remove default arrow
                 >
                   <option value="" disabled>Select from the dropdown</option>
-                  <option value="male">him</option>
-                  <option value="female">her</option>
-                  <option value="other">them</option>
+                  <option value="male">she/her</option>
+                  <option value="female">he/him</option>
+                  <option value="other">they/them</option>
                 </select>
                 {/* Custom dropdown arrow */}
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
