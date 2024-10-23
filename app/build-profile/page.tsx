@@ -13,7 +13,7 @@ const Page = () => {
   const handleNextPage = () => {
     // Check if all fields are filled
     if (firstName && lastName && pronouns) {
-      router.push('/build-profile'); // Update the route to match your folder structure
+      router.push('/connect'); // Update the route to match your folder structure
     } else {
       alert('Please fill in all fields before proceeding.'); // Alert if not all fields are filled
     }
@@ -35,7 +35,7 @@ const Page = () => {
       {/* Wrapper for the second div */}
       <div style={{ marginTop: '1rem' }}>
         <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}> {/* Set font to Nunito Sans */}
-          <div>Please complete your profile!</div>
+          <div> Lets build your profile!</div>
           <div>This information will be <span style={{ color: '#FFBF42' }}>public</span> and will help you connect with people.</div>
         </div>
       </div>
