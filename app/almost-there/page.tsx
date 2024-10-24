@@ -32,7 +32,7 @@ const Page = () => {
         </div>
 
         {/* Wrapper for HELLO! aligned to the left */}
-        <div style={{ marginTop: '6rem', marginLeft: '3rem', marginBottom:'12rem' }}>
+        <div style={{ marginTop: '4rem', marginLeft: '0rem', marginBottom:'5rem' }}>
           <div className="text-6xl font-extrabold" style={{ fontFamily: 'Montserrat, sans-serif' }}>HELLO!</div>
         </div>
 
@@ -45,7 +45,7 @@ const Page = () => {
         </div>
 
         {/* Arrow icons */}
-        <div className="flex justify-end" style={{ marginBottom: '2rem', paddingRight: '1rem' }}> 
+        <div className="flex justify-end" style={{ marginBottom: '1rem', paddingRight: '1rem' }}> 
           <div className="flex -space-x-8"> 
             {/* Arrow with smooth hover effect */}
             <div onClick={handleNextPage} className="cursor-pointer">
