@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation'; // Change the import to next/navigation
+import Image from 'next/image';
 
 
 const Page = () => {
@@ -14,15 +15,12 @@ const Page = () => {
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] text-white px-0"> {/* Remove padding */}
       {/* Top half container */}
-      <div className="w-full h-1/2 flex items-center justify-center relative">
-        <img 
+      <div className=" h-1/2 flex items-center justify-center relative">
+        <Image 
           src="/thankyou.svg" // Replace with the correct path to your SVG file
           alt="Thank You"
-          style={{ 
-            width: '100%', // Cover the entire width
-            height: '100%', // Cover the entire height
-            objectFit: 'contain' // Maintain aspect ratio
-          }} 
+          height={700}
+          width={700}
         />
       </div>
 
