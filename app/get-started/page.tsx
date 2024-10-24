@@ -56,7 +56,7 @@ const Page = () => {
                         cursor: 'pointer', // Pointer cursor on hover
                         }}
                     >
-                        Let's Striide! {/* Button text */}
+                        Let&apos;s Striide! {/* Button text */}
                     </button>
                 </div>
 

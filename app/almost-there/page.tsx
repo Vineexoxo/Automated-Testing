@@ -39,7 +39,7 @@ const Page = () => {
         {/* Wrapper for Additional Text Section centered */}
         <div style={{ marginTop : '1rem', marginBottom: '5rem' }}>
           <div style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '1.4rem' }}>
-            <div>We're building this for you!</div>
+            <div>We&apos;re building this for you!</div>
             <div>Tell us a bit about yourself so we can tailor the experience to you.</div>
           </div>
         </div>

@@ -85,10 +85,10 @@ const Page = () => {
           {/* Title Section */}
           <div className="mt-8 w-full">
             <div className="text-[#E0631D] font-semibold text-[24px] text-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              You're almost there!
+              You&apos;re almost there!
             </div>
           </div>
-  
+
           {/* Subheading Section */}
           <div className="mt-5 w-full">
             <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
@@ -96,7 +96,7 @@ const Page = () => {
               <div>This information is <span style={{ color: '#00A886' }}>private</span> and will not be displayed on your profile.</div>
             </div>
           </div>
-  
+
           {/* Form Fields Section */}
           <div className="flex justify-center mt-5">
             <div className="mt-2 mb-2 pr-0 max-w-md w-full">
@@ -118,7 +118,7 @@ const Page = () => {
                       />
                     </div>
                   </div>
-  
+
                   {/* Gender Dropdown */}
                   <div className="bg-[#00A886] text-[#F4E9E9] rounded-lg">
                     <div className="p-2">
@@ -143,7 +143,7 @@ const Page = () => {
                       </div>
                     </div>
                   </div>
-  
+
                   {/* Birthday Field */}
                   <div className="bg-[#00A886] text-[#F4E9E9] rounded-lg">
                     <div className="p-2">
@@ -163,7 +163,7 @@ const Page = () => {
               </div>
             </div>
           </div>
-  
+
           {/* Checkbox Section */}
           <div className="flex items-center ml-3 justify-center">
             <input
@@ -178,7 +178,7 @@ const Page = () => {
               <span style={{ textDecoration: 'underline' }}> Privacy Policy</span>.
             </label>
           </div>
-  
+
           {/* Arrow icons */}
           <div className="flex justify-end items-end absolute bottom-5 right-5 ">
             <div className="flex -space-x-8">
@@ -204,22 +204,22 @@ const Page = () => {
           </div>
         </div>
       ) : (
-          <div className="flex flex-col h-full justify-center">
+        <div className="flex flex-col h-full justify-center">
           {/* Title Section */}
           <div className="mt-8 w-full">
             <div className="text-[#E0631D] font-semibold text-[24px] text-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
               One last step!
             </div>
           </div>
-  
+
           {/* Subheading Section */}
           <div className="mt-5 w-full">
             <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
               <div>Please complete your profile!</div>
               <div>This information will be <span style={{ color: '#FFBF42' }}>public</span> and will help you connect with people.</div>
             </div>
-          </div>  
-  
+          </div>
+
           {/* Camera icon and bio */}
           <div className="flex justify-center mt-4">
             <Image
@@ -229,7 +229,7 @@ const Page = () => {
               height={100}
             />
           </div>
-  
+
           {/* Bio Section */}
           <div className="mt-4 mx-4">
             <div className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2" style={{ color: '#FFFFFF' }}>
@@ -238,8 +238,8 @@ const Page = () => {
                 <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
-          </div>  
-  
+          </div>
+
           <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
             <div className="text-white">
               <div className="flex flex-col space-y-4">
@@ -259,7 +259,7 @@ const Page = () => {
                     />
                   </div>
                 </div>
-  
+
                 {/* Last Name Field */}
                 <div className="bg-[#00A886] rounded-lg">
                   <div className="p-2">
@@ -280,7 +280,7 @@ const Page = () => {
             </div>
           </div>
 
-              {/* Arrow Icons */}
+          {/* Arrow Icons */}
           <div className="flex justify-end items-end absolute bottom-5 right-5 ">
             <div className="flex -space-x-8">
               {[0.6, 0.8, 1].map((opacity, index) => (
@@ -308,6 +308,6 @@ const Page = () => {
       )}
     </div>
   );
-};  
+};
 
 export default Page;
