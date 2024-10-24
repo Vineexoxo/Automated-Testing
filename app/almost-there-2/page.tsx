@@ -2,11 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { useUser } from '@clerk/nextjs';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import Image from 'next/image';
 
 const Page = () => {
   const router = useRouter();
@@ -23,10 +20,6 @@ const Page = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [pronouns, setPronouns] = useState('');
-
-  useEffect(() => {
-    console.log(user);
-  })
 
   useEffect(() => {
     if (isLoaded && user) {
@@ -67,7 +60,7 @@ const Page = () => {
 
           const updatedUser = await response.json();
           console.log('User updated:', updatedUser);
-          router.push('/connect'); // Navigate to the dashboard after successful update
+          router.push('/get-started'); // Navigate to the get-started page after successful update
         } catch (error) {
           console.error('Error updating user:', error);
           alert('An error occurred while saving your information. Please try again.');
@@ -272,6 +265,23 @@ const Page = () => {
                       placeholder="ex. Smith"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
+                      className="w-full p-2 bg-transparent border-none outline-none text-black"
+                    />
+                  </div>
+                </div>
+
+                {/* Pronouns Field */}
+                <div className="bg-[#00A886] rounded-lg">
+                  <div className="p-2">
+                    <label htmlFor="pronouns" className="text-[#F4E9E9] pl-4">Pronouns *</label>
+                  </div>
+                  <div className="bg-white rounded-b-md pl-4">
+                    <input
+                      id="pronouns"
+                      type="text"
+                      placeholder="ex. He/Him"
+                      value={pronouns}
+                      onChange={(e) => setPronouns(e.target.value)}
                       className="w-full p-2 bg-transparent border-none outline-none text-black"
                     />
                   </div>
