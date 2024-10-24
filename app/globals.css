@@ -6,8 +6,10 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
   background: linear-gradient(90deg, #802EE8 0%, #5044F1 100%);
 }
+
 
 .styled-text {
   font-family: 'Inter', sans-serif;

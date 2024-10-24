@@ -5,6 +5,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Change the import to next/navigation
 import { useSwipeable } from 'react-swipeable'; // For swipe functionality
+import RemoveFriend from '../../components/RemoveFriend'; // Adjust the import path as necessary
+
 
 const Page = () => {
   // State to manage the visibility of the pop-up
@@ -14,12 +16,19 @@ const Page = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0); // 0: QR Code, 1: Scan QR
   const [scanMessage, setScanMessage] = useState(''); // State to manage scan messages
   const [clickedUser, setClickedUser] = useState<User | null>(null); // Track which user's icon was clicked
-  const [inviteSent, setInviteSent] = useState(false); // Track if an invite has been sent
+  const [inviteSent, setInviteSent] = useState(false);
+  const [removingUser, setRemovingUser] = useState<User | null>(null);
+
+  const router = useRouter();
+
+  const handleStartStriiding = () => {
+    router.push('/get-started'); // Navigate to /get-started
+  };
 
   // Function to handle copying the link
   const handleCopyLink = () => {
     // Your logic to copy the link (you can use navigator.clipboard API)
-    navigator.clipboard.writeText("Your invite link here").then(() => {
+    navigator.clipboard.writeText("Your invite lionk here").then(() => {
       setShowPopup(true); // Show the pop-up
       setTimeout(() => {
         setShowPopup(false); // Hide the pop-up after 2 seconds
@@ -50,17 +59,17 @@ const Page = () => {
   // Sample users for demonstration
   // Sample user objects for demonstration
   const users: User[] = [
-    new User('Alice', 'Smith', 'she/her', 'Software Engineer', 'Female', new Date('1990-01-01')),
-    new User('Bob', 'Johnson', 'he/him', 'Product Manager', 'Male', new Date('1988-02-15')),
-    new User('Charlie', 'Brown', 'they/them', 'Designer', 'Non-binary', new Date('1995-03-30')),
-    new User('Diana', 'Prince', 'she/her', 'Data Scientist', 'Female', new Date('1992-04-20')),
-    new User('Ethan', 'Hunt', 'he/him', 'Web Developer', 'Male', new Date('1985-06-12')),
-    new User('Fiona', 'Apple', 'she/her', 'UX Designer', 'Female', new Date('1993-08-25')),
-    new User('George', 'Costanza', 'he/him', 'Sales Executive', 'Male', new Date('1980-11-10')),
-    new User('Hannah', 'Montana', 'she/her', 'Marketing Specialist', 'Female', new Date('1991-05-14')),
-    new User('Isaac', 'Newton', 'he/him', 'Physics Teacher', 'Male', new Date('1990-07-30')),
-    new User('Julia', 'Roberts', 'she/her', 'Graphic Designer', 'Female', new Date('1987-03-19')),
-    new User('Kevin', 'Bacon', 'he/him', 'Actor', 'Male', new Date('1965-07-08')),
+    new User('Alice', 'Smith'),
+    new User('Bob', 'Johnson'),
+    new User('Charlie', 'Brown'),
+    new User('Diana', 'Prince'),
+    new User('Ethan', 'Hunt'),
+    new User('Fiona', 'Apple'),
+    new User('George', 'Costanza'),
+    new User('Hannah', 'Montana'),
+    new User('Isaac', 'Newton'),
+    new User('Julia', 'Roberts'),
+    new User('Kevin', 'Bacon'),
   ];
   
     // Filtered users based on the search term
@@ -71,20 +80,19 @@ const Page = () => {
   //adding friends
   
   const handleIconClick = (user: User) => {
-    setClickedUser(user); // Set the clicked user
-    console.log(`User clicked: ${user.getFullName()}`);
-    setInviteSent(true); // Set invite as sent
-
-    // Revert back to original icon after a short delay
-    setTimeout(() => {
-      setClickedUser(null);
-      setInviteSent(false); // Reset invite state after showing the message
-    }, 1000); // 1000 milliseconds = 1 second
+    if (inviteSent && clickedUser === user) {
+      // If an invite is sent and the same icon is clicked again, show the confirmation popup
+      setRemovingUser(user);
+    } else if (!inviteSent) {
+      // Handle adding friend logic here (e.g., send invite)
+      setInviteSent(true); // Example: Set invite sent state
+      setClickedUser(user); // Set the clicked user
+    }
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#292732] text-white px-4">
-      <div style={{ marginTop: '2rem' }}>
+    <div className="flex flex-col h-screen bg-[#292732] text-white px-2 justify-center items-center"> {/* Add justify-center and items-center here */}
+      <div style={{ marginTop: '1rem' }}>
         <div
           className="text-[#E0631D] font-semibold text-[24px] text-center" // Center alignment
           style={{ fontFamily: 'Montserrat, sans-serif' }}
@@ -99,134 +107,148 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="flex justify-center items-center" style={{ marginTop: '2rem' }}>
-        <button
-          className="content-div-3"
-          onClick={handleCopyLink} // Attach the click handler
-          style={{
-            backgroundColor: '#00A886',
-            color: 'white',
-            padding: '1.24rem 2.9rem',
-            fontSize: '13px',
-            borderRadius: '8px',
-            fontFamily: 'Nunito Sans, sans-serif',
-            cursor: 'pointer',
-            border: 'none',
-            marginRight: '1.2rem', // Adds space between the buttons
-          }}
-        >
-          Copy invite link
-        </button>
-              {/* Pop-Up Notification */}
-      {showPopup && (
-        <div
-          className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-40 bg-black text-white px-10 py-5 rounded-xl flex items-center justify-center"
-          style={{
-            width: '350px',
-            height: '100px',
-            textAlign: 'center',
-            backdropFilter: 'blur(5px)', // Add blur for background
-            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)', // Shadow effect
-          }}
-        >
-          Link copied!
-        </div>
-      )}
+      <div className="flex justify-center items-center" style={{ marginTop: '2rem', marginRight: '1rem', marginLeft: '1rem', flexDirection: 'column', alignItems: 'center' }}>
+  <div className="flex justify-center" style={{minWidth:'20rem',maxWidth:'40rem'}}> 
+    <button
+      className="content-div-3"
+      onClick={handleCopyLink} // Attach the click handler
+      style={{
+        backgroundColor: '#00A886',
+        color: 'white',
+        fontSize: '13px',
+        borderRadius: '8px',
+        fontFamily: 'Nunito Sans, sans-serif',
+        cursor: 'pointer',
+        border: 'none',
+        marginRight: '1.2rem', // Adds space between the buttons
+        width: 'calc(90% - 0.6rem)', // Set to take half the width minus the margin
+        maxWidth: '450px', // Set max width for larger screens
+        minWidth: '100px', // Set a minimum width to avoid squishing
+        height: '4rem', // Set a uniform height
+      }}
+    >
+      Copy invite link
+    </button>
 
-        <div>
-        <button
-          className="content-div-4"
-          onClick={handleShowQRPopup} // Attach the click handler to open QR code popup
-          style={{
-            backgroundColor: '#00A886',
-            color: 'white',
-            padding: '1.24rem 2.9rem',
-            fontSize: '13px',
-            borderRadius: '8px',
-            fontFamily: 'Nunito Sans, sans-serif',
-            cursor: 'pointer',
-            border: 'none',
-          }}
-        >
-          Add by QR code
-        </button>
-        </div>
-        {/* QR Code Popup with Swiping Functionality */}
-        {showQRPopup && (
-          <div
-            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-40 bg-black text-white px-10 py-5 rounded-xl flex flex-col items-center justify-center"
-            style={{
-              width: '300px',
-              height: '450px',
-              backdropFilter: 'blur(5px)',
-              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)',
-              zIndex: 1000, // Set higher z-index for the popup
-            }}
-            {...handlers} // Adding swipe handlers
-          >
-            {activeIndex === 0 && (
-              <div className="flex flex-col items-center">
-                <h3 className="text-center" style={{ marginBottom: '1rem' }}>QR Code</h3>
-                {/* Placeholder for QR Code Image */}
-                <img
-                  src="your-qr-code-url-here" // Replace with your actual QR code URL
-                  alt="QR Code"
-                  style={{ width: '200px', height: '200px', marginBottom: '1rem' }}
-                />
-                <div className="text-center" style={{ fontSize: '14px', marginBottom: '1.5rem' }}>
-                  Swipe left to add by scanning their QR code
-                </div>
-              </div>
-            )}
-            
-            {activeIndex === 1 && (
-              <div className="flex flex-col items-center">
-                <h3 className="text-center" style={{ marginBottom: '1rem' }}>Scanner Option</h3>
-                {/* Integrate QrScanner component here */}
-                {/* <QrScanner setScanMessage={setScanMessage} onClose={handleCloseQRPopup} /> */}
-                {scanMessage && <div className="mt-2 text-center">{scanMessage}</div>} {/* Display scan message */}
-                <div className="text-center" style={{ fontSize: '14px', marginBottom: '1.5rem' }}>
-                  Point your camera at a QR code to scan
-                </div>
-              </div>
-            )}
-            {/* Orange Bar */}
-            <div
-              style={{
-                position: 'absolute', // Positioning it absolutely
-                top: ' 10px', // Position from the top
-                left: activeIndex === 0 ? '30%' : activeIndex === 1 ? '50%' : '20%', // Adjust left based on activeIndex
-                width: '50px', // Width of the orange bar
-                height: '8px', // Height of the orange bar
-                backgroundColor: '#FF6F20', // Orange color
-                borderRadius: '4px', // Optional: rounded corners
-                transition: 'left 0.3s ease', // Smooth transition for movement
-              }}
+    <button
+      className="content-div-4"
+      onClick={handleShowQRPopup} // Attach the click handler to open QR code popup
+      style={{
+        backgroundColor: '#00A886',
+        color: 'white',
+        fontSize: '13px',
+        borderRadius: '8px',
+        fontFamily: 'Nunito Sans, sans-serif',
+        cursor: 'pointer',
+        border: 'none',
+        width: 'calc(90% - 0.6rem)', // Set to take half the width minus the margin
+        maxWidth: '450px', // Set max width for larger screens
+        minWidth: '100px', // Set a minimum width to avoid squishing
+        height: '4rem', // Set a uniform height
+      }}
+    >
+      Add by QR code
+    </button>
+  </div>
+
+    {/* Pop-Up Notification */}
+    {showPopup && (
+      <div
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-40 bg-black text-white px-10 py-5 rounded-xl flex items-center justify-center"
+        style={{
+          width: '80%', // Use percentage for responsive width
+          maxWidth: '350px', // Set a max width
+          height: 'auto', // Allow height to adjust based on content
+          textAlign: 'center',
+          backdropFilter: 'blur(5px)', // Add blur for background
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)', // Shadow effect
+        }}
+      >
+        Link copied!
+      </div>
+    )}
+
+    {/* QR Code Popup with Swiping Functionality */}
+    {showQRPopup && (
+      <div
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-40 bg-black text-white px-10 py-5 rounded-xl flex flex-col items-center justify-center"
+        style={{
+          width: '80%', // Use percentage for responsive width
+          maxWidth: '300px', // Set a max width
+          height: 'auto', // Allow height to adjust based on content
+          backdropFilter: 'blur(5px)',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)',
+          zIndex: 1000, // Set higher z-index for the popup
+        }}
+        {...handlers} // Adding swipe handlers
+      >
+        {activeIndex === 0 && (
+          <div className="flex flex-col items-center">
+            <h3 className="text-center" style={{ marginBottom: '1rem' }}>QR Code</h3>
+            {/* Placeholder for QR Code Image */}
+            <img
+              src="your-qr-code-url-here" // Replace with your actual QR code URL
+              alt="QR Code"
+              style={{ width: '80%', maxWidth: '200px', height: 'auto', marginBottom: '1rem' }} // Make QR code responsive
             />
-
-            {/* Close Button */}
-            <button
-              onClick={handleCloseQRPopup}
-              style={{
-                backgroundColor: '#6B18D8',
-                color: 'white',
-                padding: '0.8rem 3rem',
-                fontSize: '14px',
-                borderRadius: '8px',
-                fontFamily: 'Montserrat, sans-serif',
-                cursor: 'pointer',
-                border: 'none',
-              }}
-            >
-              Close
-            </button>
+            <div className="text-center" style={{ fontSize: '14px', marginBottom: '1.5rem' }}>
+              Swipe left to add by scanning their QR code
+            </div>
+          </div>
+        )}
+        
+        {activeIndex === 1 && (
+          <div className="flex flex-col items-center">
+            <h3 className="text-center" style={{ marginBottom: '1rem' }}>Scanner Option</h3>
+            {/* Integrate QrScanner component here */}
+            {/* <QrScanner setScanMessage={setScanMessage} onClose={handleCloseQRPopup} /> */}
+            {scanMessage && <div className="mt-2 text-center">{scanMessage}</div>} {/* Display scan message */}
+            <div className="text-center" style={{ fontSize: '14px', marginBottom: '1.5rem' }}>
+              Point your camera at a QR code to scan
+            </div>
           </div>
         )}
 
-        
-      </div>
+        {/* Orange Bar */}
+        <div
+          style={{
+            position: 'absolute', // Positioning it absolutely
+            top: '10px', // Position from the top
+            left: activeIndex === 0 ? '30%' : activeIndex === 1 ? '50%' : '20%', // Adjust left based on activeIndex
+            width: '50px', // Width of the orange bar
+            height: '8px', // Height of the orange bar
+            backgroundColor: '#FF6F20', // Orange color
+            borderRadius: '4px', // Optional: rounded corners
+            transition: 'left 0.3s ease', // Smooth transition for movement
+          }}
+        />
 
-      <div className="flex justify-center items-center" style={{ marginTop: '2rem', marginRight: '1.5rem', marginLeft: '1.5rem' }}>
+        {/* Close Button */}
+        <button
+          onClick={handleCloseQRPopup}
+          style={{
+            backgroundColor: '#6B18D8',
+            color: 'white',
+            padding: '0.8rem 3rem',
+            fontSize: '14px',
+            borderRadius: '8px',
+            fontFamily: 'Montserrat, sans-serif',
+            cursor: 'pointer',
+            border: 'none',
+            width: '100%', // Make button full width
+            maxWidth: '200px', // Set a max width for the close button
+          }}
+        >
+          Close
+        </button>
+      </div>
+    )}
+  </div>
+
+
+
+{/* Search Bar Section */}
+<div className="flex justify-center items-center" style={{ marginTop: '2rem', width: '90%', marginLeft: '1rem', marginRight: '1rem' }}>
         <div style={{ position: 'relative', width: '100%', maxWidth: '500px' }}>
           <input
             type="text"
@@ -235,8 +257,7 @@ const Page = () => {
             onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm on input change
             style={{
               padding: '1rem',
-              width: '100%',
-              paddingRight: '3rem', // Space for the icon
+              width: '100%', // Change to 100% for responsiveness
               borderRadius: '8px',
               border: '0.3px solid #9E88B2',
               fontSize: '14px',
@@ -260,67 +281,62 @@ const Page = () => {
       </div>
 
       {/* Users Display Section */}
-      <div style={{ marginTop: '1rem', width: '400px', height: '330px' }}>
-        <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
-          <div style={{ padding: '1rem', border: 'none' }}>
-            <h3 style={{ marginBottom: '0.5rem' }}>Users:</h3>
-
-            <ul
-              style={{
-                listStyleType: 'none',
-                padding: 0,
-                height: '200px', // Set a fixed height
-                overflowY: 'scroll', // Allow vertical scrolling
-                scrollbarWidth: 'none', // Hide scrollbar for Firefox
-                // Hide scrollbar for Internet Explorer and Edge
-              }}
-
-            >
-              {users.length > 0 ? (
-                users.map((user, index) => (
-                  <li
-                    key={index}
+      <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', width: '100%', height:'40%'}}>
+        <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif', width: '100%', maxWidth: '400px', padding: '1rem' }}>
+          <ul
+            style={{
+              listStyleType: 'none',
+              padding: 0,
+              height: '200px', // Set a fixed height for scrollable list
+              overflowY: 'scroll', // Enable vertical scrolling
+              scrollbarWidth: 'none', // Hide scrollbar for Firefox
+              width: '100%', // Use 100% width for responsiveness
+              textAlign: 'center', // Center text inside the list
+            }}
+          >
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((user, index) => (
+                <li
+                  key={index}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '1rem', // Space between each user entry
+                    textAlign: 'center', // Center text for each user entry
+                  }}
+                >
+                  <span style={{ marginRight: '8px' }}>{user.getFullName()}</span> {/* Add margin to the right */}
+                  <img
+                    src="/userIcon.svg" // Single image used for the icon
+                    alt="User Icon"
                     style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      marginBottom: '1rem', // Space between each user entry
+                      width: '24px', // Set the width of the icon
+                      height: '24px', // Set the height of the icon
+                      cursor: 'pointer',
+                      marginLeft: '8px', // Add margin to the left of the icon
+                      filter: clickedUser === user ? 'hue-rotate(240deg)' : 'none', // Change color to purple when clicked
+                      opacity: clickedUser === user ? 1 : 0.6, // Optionally adjust opacity for a visual effect
+                      transition: 'filter 0.3s, opacity 0.3s', // Smooth transition
                     }}
-                  >
-                    <span>{user.getFullName()}</span>
-                    <img
-                      src={clickedUser === user ? "/add-friend-filled.svg" : "/userIcon.svg"} // Change icon based on click state
-                      alt="User Icon"
-                      style={{
-                        width: '24px', // Set the width of the icon
-                        height: '24px', // Set the height of the icon
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => handleIconClick(user)} // Handle icon click
-                    />
-                  </li>
-                ))
-              ) : (
-                <li>No users found</li>
-              )}
-            </ul>
-
-          </div>
-          {inviteSent && (
-            <p style={{ color: 'white', marginTop: '2rem' }}>
-              Your friends have been sent an invite!
-            </p>
-          )}
+                    onClick={() => handleIconClick(user)} // Handle icon click
+                  />
+                </li>
+              ))
+            ) : (
+              <li>No users found</li>
+            )}
+          </ul>
         </div>
       </div>
 
 
-
-
       {/* Start Striiding Button */}
-      <div className="flex justify-center" style={{ marginTop: '1rem' }}>
+      <div className="flex justify-center" style={{marginBottom:'1rem' }}>
         <button
+        onClick={handleStartStriiding}
           style={{
+            
             backgroundColor: '#6B18D8',
             color: 'white',
             padding: '1rem 7rem',
@@ -329,6 +345,8 @@ const Page = () => {
             fontFamily: 'Montserrat, sans-serif',
             cursor: 'pointer',
             border: 'none',
+            // maxWidth:'50rem',
+            // minWidth:'30rem',
           }}
         >
           Start Striiding!

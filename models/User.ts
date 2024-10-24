@@ -1,4 +1,3 @@
-// User.ts
 export class User {
     // Private attributes
     private firstName: string;
@@ -9,12 +8,12 @@ export class User {
     private birthday: Date;
   
     constructor(
-      firstName: string,
-      lastName: string,
-      pronouns: string,
-      occupation: string,
-      gender: string,
-      birthday: Date
+      firstName: string = 'John',
+      lastName: string = 'Doe',
+      pronouns: string = 'they/them',
+      occupation: string = 'Unemployed',
+      gender: string = 'Unknown',
+      birthday: Date = new Date('2000-01-01') // Default birthday
     ) {
       this.firstName = firstName;
       this.lastName = lastName;
