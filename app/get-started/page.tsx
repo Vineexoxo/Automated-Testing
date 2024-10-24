@@ -41,15 +41,27 @@ const Page = () => {
           </div>
         </div>
 
-        {/* Wrapper for HELLO! aligned to the left */}
-        <div style={{ marginTop: '6rem', marginLeft: '3rem', marginBottom: '12rem' }}>
-          <div className="text-6xl font-extrabold" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            {/* Add your text here if needed */}
-          </div>
-        </div>
+{/* Button Section */}
+            <div style={{ marginTop: '6rem', textAlign: 'center', display: 'flex', justifyContent: 'center', width: '100%' }}>
+                    <button
+                        onClick={handleNextPage} // Navigate to the profile page on click
+                        style={{
+                        backgroundColor: '#FFF6FF', // Button background color
+                        color: '#6B18D8', // Button text color
+                        padding: '1.4rem 6rem', // Padding for the button
+                        borderRadius: '8px', // Rounded corners
+                        border: 'none', // No border
+                        fontSize: '18px', // Font size
+                        fontFamily: 'Montserrat, sans-serif', // Font family
+                        cursor: 'pointer', // Pointer cursor on hover
+                        }}
+                    >
+                        Let's Striide! {/* Button text */}
+                    </button>
+                </div>
 
-      </div>
-    </div>
+            </div>
+            </div>
   );
 };
 

@@ -79,95 +79,98 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#292732] w-[100vw] text-white justify-center">
+    <div className="flex flex-col min-h-screen bg-[#292732] w-full text-white justify-start">
       {step === 1 ? (
-        <div className="flex flex-col h-full">
-          <div style={{ marginTop: '2rem' }}>
-            <div
-              className="text-[#E0631D] font-semibold text-[24px] text-center"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
+        <div className="flex flex-col h-full justify-center">
+          {/* Title Section */}
+          <div className="mt-8 w-full">
+            <div className="text-[#E0631D] font-semibold text-[24px] text-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
               You're almost there!
             </div>
           </div>
-
-          <div style={{ marginTop: '1rem' }}>
+  
+          {/* Subheading Section */}
+          <div className="mt-5 w-full">
             <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
               <div>Tell Us About Yourself!</div>
               <div>This information is <span style={{ color: '#00A886' }}>private</span> and will not be displayed on your profile.</div>
             </div>
           </div>
-
-          <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingRight: '1rem' }}>
-            <div className="text-white">
-              <div className="flex flex-col space-y-4">
-                {/* Occupation Field */}
-                <div className="bg-[#00A886] rounded-lg">
-                  <div className="p-2">
-                    <label htmlFor="occupation" className="text-[#F4E9E9] pl-4">Occupation *</label>
-                  </div>
-                  <div className="bg-white rounded-b-md pl-4">
-                    <input
-                      id="occupation"
-                      type="text"
-                      placeholder="ex. Engineer"
-                      value={occupation}
-                      onChange={(e) => setOccupation(e.target.value)}
-                      className="w-full p-2 bg-transparent border-none outline-none text-black"
-                    />
-                  </div>
-                </div>
-
-                {/* Gender Dropdown */}
-                <div className="bg-[#00A886] text-[#F4E9E9] rounded-lg">
-                  <div className="p-2">
-                    <label htmlFor="gender" className="pl-4">Gender *</label>
-                  </div>
-                  <div className="bg-white rounded-b-lg relative">
-                    <select
-                      id="gender"
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
-                    >
-                      <option value="" disabled>Select from the dropdown</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
-                    </select>
-                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
-                      </svg>
+  
+          {/* Form Fields Section */}
+          <div className="flex justify-center mt-5">
+            <div className="mt-2 mb-2 pr-0 max-w-md w-full">
+              <div className="text-white">
+                <div className="flex flex-col space-y-5 ml-2 mr-2 mb-5">
+                  {/* Occupation Field */}
+                  <div className="bg-[#00A886] rounded-lg">
+                    <div className="p-2">
+                      <label htmlFor="occupation" className="text-[#F4E9E9] pl-4">Occupation *</label>
+                    </div>
+                    <div className="bg-white rounded-b-md pl-4">
+                      <input
+                        id="occupation"
+                        type="text"
+                        placeholder="ex. Engineer"
+                        value={occupation}
+                        onChange={(e) => setOccupation(e.target.value)}
+                        className="w-full p-2 bg-transparent border-none outline-none text-black"
+                      />
                     </div>
                   </div>
-                </div>
-
-                {/* Birthday Field */}
-                <div className="bg-[#00A886] text-[#F4E9E9] rounded-lg">
-                  <div className="p-2">
-                    <label htmlFor="birthday" className="pl-4">Birthday *</label>
+  
+                  {/* Gender Dropdown */}
+                  <div className="bg-[#00A886] text-[#F4E9E9] rounded-lg">
+                    <div className="p-2">
+                      <label htmlFor="gender" className="pl-4">Gender *</label>
+                    </div>
+                    <div className="bg-white rounded-b-lg relative">
+                      <select
+                        id="gender"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                        className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
+                      >
+                        <option value="" disabled>Select from the dropdown</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
-                  <div className="bg-white rounded-b-md pl-2">
-                    <input
-                      id="birthday"
-                      type="date"
-                      value={birthday}
-                      onChange={(e) => setBirthday(e.target.value)}
-                      className="w-full p-2 bg-transparent border-none outline-none text-black placeholder:font-semibold pl-4"
-                    />
+  
+                  {/* Birthday Field */}
+                  <div className="bg-[#00A886] text-[#F4E9E9] rounded-lg">
+                    <div className="p-2">
+                      <label htmlFor="birthday" className="pl-4">Birthday *</label>
+                    </div>
+                    <div className="bg-white rounded-b-md pl-2">
+                      <input
+                        id="birthday"
+                        type="date"
+                        value={birthday}
+                        onChange={(e) => setBirthday(e.target.value)}
+                        className="w-full p-2 bg-transparent border-none outline-none text-black placeholder:font-semibold pl-4"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-          <div className="flex items-center mb-4">
+  
+          {/* Checkbox Section */}
+          <div className="flex items-center ml-3 justify-center">
             <input
               type="checkbox"
               checked={isChecked}
               onChange={() => setIsChecked(!isChecked)}
-              className="mr-2"
+              className="mr-4"
             />
             <label className="text-white" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
               I hereby confirm that I have read and agree with the
@@ -175,9 +178,9 @@ const Page = () => {
               <span style={{ textDecoration: 'underline' }}> Privacy Policy</span>.
             </label>
           </div>
-
+  
           {/* Arrow icons */}
-          <div className="flex-grow flex justify-end items-end pb-4 pr-4">
+          <div className="flex justify-end items-end absolute bottom-5 right-5 ">
             <div className="flex -space-x-8">
               {[0.6, 0.8, 1].map((opacity, index) => (
                 <div key={index} onClick={handleNextStep} className="cursor-pointer">
@@ -201,23 +204,23 @@ const Page = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col h-full">
-          <div style={{ marginTop: '2rem' }}>
-            <div
-              className="text-[#E0631D] font-semibold text-[24px] text-center"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
+          <div className="flex flex-col h-full justify-center">
+          {/* Title Section */}
+          <div className="mt-8 w-full">
+            <div className="text-[#E0631D] font-semibold text-[24px] text-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
               One last step!
             </div>
           </div>
-
-          <div style={{ marginTop: '1rem' }}>
+  
+          {/* Subheading Section */}
+          <div className="mt-5 w-full">
             <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
               <div>Please complete your profile!</div>
               <div>This information will be <span style={{ color: '#FFBF42' }}>public</span> and will help you connect with people.</div>
             </div>
-          </div>
-
+          </div>  
+  
+          {/* Camera icon and bio */}
           <div className="flex justify-center mt-4">
             <Image
               src="/camera.svg"
@@ -226,20 +229,17 @@ const Page = () => {
               height={100}
             />
           </div>
-
-          {/* New Bio box */}
+  
+          {/* Bio Section */}
           <div className="mt-4 mx-4">
-            <div
-              className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2"
-              style={{ color: '#FFFFFF' }}
-            >
+            <div className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2" style={{ color: '#FFFFFF' }}>
               <span className="text-lg font-semibold">Bio</span>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
-          </div>
-
+          </div>  
+  
           <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
             <div className="text-white">
               <div className="flex flex-col space-y-4">
@@ -259,7 +259,7 @@ const Page = () => {
                     />
                   </div>
                 </div>
-
+  
                 {/* Last Name Field */}
                 <div className="bg-[#00A886] rounded-lg">
                   <div className="p-2">
@@ -276,37 +276,12 @@ const Page = () => {
                     />
                   </div>
                 </div>
-
-                {/* Pronouns Dropdown */}
-                <div className="bg-[#00A886] rounded-lg">
-                  <div className="p-2">
-                    <label htmlFor="pronouns" className="text-[#F4E9E9] pl-4">Pronouns *</label>
-                  </div>
-                  <div className="bg-white rounded-b-md pl-4 relative">
-                    <select
-                      id="pronouns"
-                      value={pronouns}
-                      onChange={(e) => setPronouns(e.target.value)}
-                      className="w-full p-2 bg-transparent border-none outline-none text-black pl-2 pr-8 appearance-none"
-                    >
-                      <option value="" disabled>Select from the dropdown</option>
-                      <option value="she/her">she/her</option>
-                      <option value="he/him">he/him</option>
-                      <option value="they/them">they/them</option>
-                    </select>
-                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
 
-          {/* Arrow icons */}
-          <div className="flex-grow flex justify-end items-end pb-4 pr-4">
+              {/* Arrow Icons */}
+          <div className="flex justify-end items-end absolute bottom-5 right-5 ">
             <div className="flex -space-x-8">
               {[0.6, 0.8, 1].map((opacity, index) => (
                 <div key={index} onClick={handleNextStep} className="cursor-pointer">
@@ -328,10 +303,11 @@ const Page = () => {
               ))}
             </div>
           </div>
+
         </div>
       )}
     </div>
   );
-};
+};  
 
 export default Page;
