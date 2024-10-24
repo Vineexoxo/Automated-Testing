@@ -36,7 +36,7 @@ const Page = async () => {
   };
 
   if (!isAuth) {
-    redirect("/");
+    router.push("/");
   }
 
   return (
