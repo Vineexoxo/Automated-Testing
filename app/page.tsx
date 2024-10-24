@@ -13,7 +13,7 @@ export default function Home() {
           Join us in building a connected and aware community where we look out for each other.
         </p>
         <p className="text-lg mb-10">
-          Welcome to Version 1! It's not perfect, but with your help, we can make it amazing.
+          Welcome to Version 1! It&apos;s not perfect, but with your help, we can make it amazing.
         </p>
       </div>
       <div className="w-full max-w-sm flex flex-col gap-4">

@@ -16,28 +16,29 @@ const Page = () => {
     <div className="flex flex-col h-screen overflow-hidden bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] text-white px-0"> {/* Remove padding */}
       {/* Top half container */}
       <div className=" h-1/2 flex items-center justify-center relative">
-        <Image 
-          src="/thankyou.svg" // Replace with the correct path to your SVG file
+        <Image
+          src="/thankyou.svg"
           alt="Thank You"
           height={700}
           width={700}
+          priority
         />
       </div>
 
-        {/* Bottom half container */}
-        <div className="w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl flex flex-col items-center justify-center">
-        
+      {/* Bottom half container */}
+      <div className="w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl flex flex-col items-center justify-center">
+
         {/* Wrapper for Striide with inline style for top margin */}
         <div style={{ paddingTop: '1rem', textAlign: 'center', marginRight: '1rem', marginLeft: '1rem' }}>
-            <div className="text-center text-white" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+          <div className="text-center text-white" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
             <div>
-                Your insights are invaluable. During this beta phase, we encourage you to
-                share your feedback, report any issues, and suggest improvements.
+              Your insights are invaluable. During this beta phase, we encourage you to
+              share your feedback, report any issues, and suggest improvements.
             </div>
-            <div style={{marginTop:'1rem'}}>
-                Together, let's empower one another!
+            <div style={{ marginTop: '1rem' }}>
+              Together, let&apos;s empower one another!
             </div>
-            </div>
+          </div>
         </div>
 
         {/* Wrapper for HELLO! aligned to the left */}
