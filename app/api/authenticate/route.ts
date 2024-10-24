@@ -1,14 +1,13 @@
+import { NextResponse } from 'next/server';
 import { auth, currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/db";
 
-import { NextApiRequest, NextApiResponse } from 'next';
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   const { userId } = auth();
   const user = await currentUser();
 
   if (!user) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const loggedInUser = await prisma.user.findUnique({
@@ -26,5 +25,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  res.status(200).json({ isAuth: !!userId });
+  return NextResponse.json({ isAuth: !!userId });
 }
