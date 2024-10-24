@@ -1,8 +1,31 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { clerkClient, WebhookEvent } from "@clerk/nextjs/server";
-import { createUser } from "@/actions/user.action";
 import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+async function createUser(user: {
+  clerkId: string;
+  email: string;
+  username: string;
+  photo: string;
+  firstName: string;
+  lastName: string;
+}) {
+  return await prisma.user.create({
+    data: {
+      clerkUserId: user.clerkId,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      imageUrl: user.photo,
+      // Add other fields as necessary
+    },
+  });
+}
+
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -64,8 +87,8 @@ export async function POST(req: Request) {
       email: email_addresses[0].email_address,
       username: username!,
       photo: image_url!,
-      firstName: first_name,
-      lastName: last_name,
+      firstName: first_name || "DefaultFirstName", // Provide a default value
+      lastName: last_name || "DefaultLastName",   // Provide a default value
     };
 
     console.log(user);
@@ -75,7 +98,7 @@ export async function POST(req: Request) {
     if (newUser) {
       await clerkClient.users.updateUserMetadata(id, {
         publicMetadata: {
-          userId: newUser._id,
+          userId: newUser.id, // Changed from newUser._id to newUser.id
         },
       });
     }
