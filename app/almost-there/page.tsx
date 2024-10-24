@@ -1,15 +1,26 @@
 "use client"; // Add this line to mark the component as a Client Component
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // Change the import to next/navigation
+import { useAuth } from "@clerk/nextjs";
 
 const Page = () => {
   const router = useRouter();
+  const { isLoaded, userId } = useAuth();
 
-  // Handler for navigating to the next page
+  useEffect(() => {
+    if (isLoaded && !userId) {
+      router.push('/sign-in');
+    }
+  }, [isLoaded, userId, router]);
+
   const handleNextPage = () => {
-    router.push('/almost-there-2'); // Update the route to match your folder structure
+    router.push('/almost-there-2');
   };
+
+  if (!isLoaded || !userId) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-tr from-[#3A00A4]  to-[#802EE8] text-white px-4">
