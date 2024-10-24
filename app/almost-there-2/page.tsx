@@ -79,7 +79,7 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#292732] w-[100vw] text-white">
+    <div className="flex flex-col min-h-screen bg-[#292732] w-[100vw] text-white justify-center">
       {step === 1 ? (
         <div className="flex flex-col h-full">
           <div style={{ marginTop: '2rem' }}>
