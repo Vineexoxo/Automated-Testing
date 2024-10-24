@@ -23,7 +23,7 @@ const Page = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center text-white px-4 bg-gradient-to-tr from-[#3A00A4] to-[#802EE8]">
+    <div className="flex flex-col items-center justify-center text-white px-4 bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] h-screen w-screen">
       <div className="w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl flex flex-col">
         
         {/* Wrapper for Striide with inline style for top margin */}
@@ -37,7 +37,7 @@ const Page = () => {
         </div>
 
         {/* Wrapper for Additional Text Section centered */}
-        <div style={{ marginTop : '1rem', marginBottom: '5rem', marginLeft: '3rem', paddingRight: '3rem' }}>
+        <div style={{ marginTop : '1rem', marginBottom: '5rem' }}>
           <div style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '1.4rem' }}>
             <div>We're building this for you!</div>
             <div>Tell us a bit about yourself so we can tailor the experience to you.</div>
