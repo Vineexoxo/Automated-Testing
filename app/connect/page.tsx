@@ -105,49 +105,25 @@ const Page = () => {
         </div>
 
 
-      <div className="flex justify-center items-center" style={{ marginTop: '2rem', marginRight: '1rem', marginLeft: '1rem', flexDirection: 'column', alignItems: 'center' }}>
-  <div className="flex justify-center" style={{minWidth:'20rem',maxWidth:'40rem'}}> 
-    <button
-      className="content-div-3"
-      onClick={handleCopyLink} // Attach the click handler
-      style={{
-        backgroundColor: '#00A886',
-        color: 'white',
-        fontSize: '13px',
-        borderRadius: '8px',
-        fontFamily: 'Nunito Sans, sans-serif',
-        cursor: 'pointer',
-        border: 'none',
-        marginRight: '1.2rem', // Adds space between the buttons
-        width: 'calc(90% - 0.6rem)', // Set to take half the width minus the margin
-        maxWidth: '450px', // Set max width for larger screens
-        minWidth: '100px', // Set a minimum width to avoid squishing
-        height: '4rem', // Set a uniform height
-      }}
-    >
-      Copy invite link
-    </button>
+      <div className="flex justify-center items-center mb-5 sm:mb-6 md:mb-8 lg:mb-9 " >
+        <div className="flex justify-center space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10 w-full max-w-4xl px-4 ">
+          {/* Copy Invite Link Button */}
+          <button
+            onClick={handleCopyLink} // Attach the click handler
+            className="bg-[#00A886] text-white text-xs sm:text-s md:text-base lg:text-lg rounded-lg font-nunito py-3 sm:py-3 md:py-4 lg:py-5 w-full max-w-xs sm:max-w-sm lg:max-w-md min-w-[100px] sm:min-w-[150px] md:min-w-[200px] cursor-pointer"
+          >
+            Copy invite link
+          </button>
 
-    <button
-      className="content-div-4"
-      onClick={handleShowQRPopup} // Attach the click handler to open QR code popup
-      style={{
-        backgroundColor: '#00A886',
-        color: 'white',
-        fontSize: '13px',
-        borderRadius: '8px',
-        fontFamily: 'Nunito Sans, sans-serif',
-        cursor: 'pointer',
-        border: 'none',
-        width: 'calc(90% - 0.6rem)', // Set to take half the width minus the margin
-        maxWidth: '450px', // Set max width for larger screens
-        minWidth: '100px', // Set a minimum width to avoid squishing
-        height: '4rem', // Set a uniform height
-      }}
-    >
-      Add by QR code
-    </button>
-  </div>
+          {/* Add by QR Code Button */}
+          <button
+            onClick={handleShowQRPopup} // Attach the click handler to open QR code popup
+            className="bg-[#00A886] text-white text-xs sm:text-s md:text-base lg:text-lg rounded-lg font-nunitopy-3 sm:py-3 md:py-4 lg:py-5 w-full max-w-xs sm:max-w-sm lg:max-w-md min-w-[100px] sm:min-w-[150px] md:min-w-[200px] cursor-pointer"
+          >
+            Add by QR code
+          </button>
+        </div>
+
 
     {/* Pop-Up Notification */}
     {showPopup && (
@@ -246,7 +222,7 @@ const Page = () => {
 
 
   {/* Search Bar Section */}
-  <div className="flex justify-center items-center" style={{ marginTop: '2rem', width: '90%', marginLeft: '1rem', marginRight: '1rem' }}>
+  <div className="flex justify-center items-center" style={{ width: '100%'}}>
           <div style={{ position: 'relative', width: '100%', maxWidth: '500px' }}>
             <input
               type="text"
