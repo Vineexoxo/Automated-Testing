@@ -1,13 +1,11 @@
 "use client"; // Add this line to mark the component as a Client Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-
+import { User } from '../../models/User';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Change the import to next/navigation
 import { useSwipeable } from 'react-swipeable'; // For swipe functionality
-import { Html5QrcodeScanner } from 'html5-qrcode';
-import QrScanner from '../../components/QrScanner';
+
 const Page = () => {
   // State to manage the visibility of the pop-up
   const [showPopup, setShowPopup] = useState(false);
@@ -15,6 +13,8 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState(''); // State to manage search input
   const [activeIndex, setActiveIndex] = useState<number>(0); // 0: QR Code, 1: Scan QR
   const [scanMessage, setScanMessage] = useState(''); // State to manage scan messages
+  const [clickedUser, setClickedUser] = useState<User | null>(null); // Track which user's icon was clicked
+  const [inviteSent, setInviteSent] = useState(false); // Track if an invite has been sent
 
   // Function to handle copying the link
   const handleCopyLink = () => {
@@ -39,26 +39,48 @@ const Page = () => {
     setActiveIndex(0); // Reset to the QR Code view if needed
     setScanMessage(''); // Reset the scan message
   };
-  const handleScanSuccess = (decodedText: string) => {
-    setScanMessage("Scan successful: " + decodedText); // Set success message
-  };
 
-  const handleScanError = (errorMessage: string) => {
-    setScanMessage("Incorrect QR code."); // Set error message
-  };
-
-    // Swipe handlers
+    // Swipe handlers for qrcode pop up
   const handlers = useSwipeable({
       onSwipedLeft: () => setActiveIndex(1),  // Swiping left will switch to scanner
       onSwipedRight: () => setActiveIndex(0), // Swiping right will switch back to QR code
       trackMouse: true,
   });
-
+  //next page contents
   // Sample users for demonstration
-  const users = ['User 1', 'User 2', 'User 3', 'Alice', 'Bob']; // Add more users as needed
+  // Sample user objects for demonstration
+  const users: User[] = [
+    new User('Alice', 'Smith', 'she/her', 'Software Engineer', 'Female', new Date('1990-01-01')),
+    new User('Bob', 'Johnson', 'he/him', 'Product Manager', 'Male', new Date('1988-02-15')),
+    new User('Charlie', 'Brown', 'they/them', 'Designer', 'Non-binary', new Date('1995-03-30')),
+    new User('Diana', 'Prince', 'she/her', 'Data Scientist', 'Female', new Date('1992-04-20')),
+    new User('Ethan', 'Hunt', 'he/him', 'Web Developer', 'Male', new Date('1985-06-12')),
+    new User('Fiona', 'Apple', 'she/her', 'UX Designer', 'Female', new Date('1993-08-25')),
+    new User('George', 'Costanza', 'he/him', 'Sales Executive', 'Male', new Date('1980-11-10')),
+    new User('Hannah', 'Montana', 'she/her', 'Marketing Specialist', 'Female', new Date('1991-05-14')),
+    new User('Isaac', 'Newton', 'he/him', 'Physics Teacher', 'Male', new Date('1990-07-30')),
+    new User('Julia', 'Roberts', 'she/her', 'Graphic Designer', 'Female', new Date('1987-03-19')),
+    new User('Kevin', 'Bacon', 'he/him', 'Actor', 'Male', new Date('1965-07-08')),
+  ];
+  
+    // Filtered users based on the search term
+    const filteredUsers = users.filter(user => 
+      user.getFullName().toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-  // Filtered users based on the search term
-  const filteredUsers = users.filter(user => user.toLowerCase().includes(searchTerm.toLowerCase()));
+  //adding friends
+  
+  const handleIconClick = (user: User) => {
+    setClickedUser(user); // Set the clicked user
+    console.log(`User clicked: ${user.getFullName()}`);
+    setInviteSent(true); // Set invite as sent
+
+    // Revert back to original icon after a short delay
+    setTimeout(() => {
+      setClickedUser(null);
+      setInviteSent(false); // Reset invite state after showing the message
+    }, 1000); // 1000 milliseconds = 1 second
+  };
 
   return (
     <div className="flex flex-col h-screen bg-[#292732] text-white px-4">
@@ -238,38 +260,65 @@ const Page = () => {
       </div>
 
       {/* Users Display Section */}
-      <div style={{ marginTop: '1rem' }}>
-      <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
-        <div style={{ padding: '1rem', border: 'none', backgroundColor: '#292732' }}>
-          <h3 style={{ marginBottom: '0.5rem' }}>Users:</h3>
-          <ul style={{ listStyleType: 'none', padding: 0 }}>
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user, index) => (
-                <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span>{user}</span>
-                  <FontAwesomeIcon
-                    icon={faUserPlus} // Use the user icon
+      <div style={{ marginTop: '1rem', width: '400px', height: '330px' }}>
+        <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+          <div style={{ padding: '1rem', border: 'none' }}>
+            <h3 style={{ marginBottom: '0.5rem' }}>Users:</h3>
+
+            <ul
+              style={{
+                listStyleType: 'none',
+                padding: 0,
+                height: '200px', // Set a fixed height
+                overflowY: 'scroll', // Allow vertical scrolling
+                scrollbarWidth: 'none', // Hide scrollbar for Firefox
+                // Hide scrollbar for Internet Explorer and Edge
+              }}
+
+            >
+              {users.length > 0 ? (
+                users.map((user, index) => (
+                  <li
+                    key={index}
                     style={{
-                      cursor: 'pointer',
-                      fill: 'white',
-                      marginLeft: '1rem', // Space between user name and icon
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '1rem', // Space between each user entry
                     }}
-                    onClick={() => console.log(`User clicked: ${user}`)} // Handle icon click
-                    onMouseEnter={(e) => (e.currentTarget.style.fill = '#6B18D8')} // Change color on hover
-                    onMouseLeave={(e) => (e.currentTarget.style.fill = 'white')} // Revert color when not hovering
-                  />
-                </li>
-              ))
-            ) : (
-              <li>No users found</li>
-            )}
-          </ul>
+                  >
+                    <span>{user.getFullName()}</span>
+                    <img
+                      src={clickedUser === user ? "/add-friend-filled.svg" : "/userIcon.svg"} // Change icon based on click state
+                      alt="User Icon"
+                      style={{
+                        width: '24px', // Set the width of the icon
+                        height: '24px', // Set the height of the icon
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => handleIconClick(user)} // Handle icon click
+                    />
+                  </li>
+                ))
+              ) : (
+                <li>No users found</li>
+              )}
+            </ul>
+
+          </div>
+          {inviteSent && (
+            <p style={{ color: 'white', marginTop: '2rem' }}>
+              Your friends have been sent an invite!
+            </p>
+          )}
         </div>
       </div>
-    </div>
+
+
+
 
       {/* Start Striiding Button */}
-      <div className="flex justify-center" style={{ marginTop: '12rem' }}>
+      <div className="flex justify-center" style={{ marginTop: '1rem' }}>
         <button
           style={{
             backgroundColor: '#6B18D8',

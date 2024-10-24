@@ -67,7 +67,7 @@ const Page = () => {
 
           const updatedUser = await response.json();
           console.log('User updated:', updatedUser);
-          router.push('/dashboard'); // Navigate to the dashboard after successful update
+          router.push('/connect'); // Navigate to the dashboard after successful update
         } catch (error) {
           console.error('Error updating user:', error);
           alert('An error occurred while saving your information. Please try again.');
