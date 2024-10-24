@@ -91,21 +91,19 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#292732] text-white px-2 justify-center items-center"> {/* Add justify-center and items-center here */}
-      <div style={{ marginTop: '1rem' }}>
-        <div
-          className="text-[#E0631D] font-semibold text-[24px] text-center" // Center alignment
-          style={{ fontFamily: 'Montserrat, sans-serif' }}
-        >
-          Let's Connect
-        </div>
-      </div>
+  <div className="flex flex-col min-h-screen w-full bg-[#292732] text-white">        <div className="flex-grow flex flex-col justify-between px-2 py-10 text-white ">
+        <div className="flex-grow flex flex-col justify-between px-2 text-white ">
+          {/* Title Section */}
+          <div>
+            <div className="text-[#E0631D] font-semibold text-center font-bold text-2xl sm:text-2xl md:text-3xl lg:text-4xl"  style={{ fontFamily: 'Montserrat, sans-serif' }}>
+              Let's Connect
+          </div>
 
-      <div style={{ marginTop: '1rem' }}>
-        <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif', paddingLeft: '3rem', paddingRight: '3rem' }}>
-          <div>Looks like none of your contacts is on Striide yet, let's bring them onboard!</div>
+          <div className="text-white text-center mt-2 sm:mt-4 md:mt-6 " style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+              <p className="text-md md:text-xl lg:text-2xl">For the app to work, your friends need to be here too. Let's invite as many as possible!</p>
+          </div>
         </div>
-      </div>
+
 
       <div className="flex justify-center items-center" style={{ marginTop: '2rem', marginRight: '1rem', marginLeft: '1rem', flexDirection: 'column', alignItems: 'center' }}>
   <div className="flex justify-center" style={{minWidth:'20rem',maxWidth:'40rem'}}> 
@@ -247,110 +245,112 @@ const Page = () => {
 
 
 
-{/* Search Bar Section */}
-<div className="flex justify-center items-center" style={{ marginTop: '2rem', width: '90%', marginLeft: '1rem', marginRight: '1rem' }}>
-        <div style={{ position: 'relative', width: '100%', maxWidth: '500px' }}>
-          <input
-            type="text"
-            placeholder="Search with first or last name"
-            value={searchTerm} // Set the input value to searchTerm
-            onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm on input change
-            style={{
-              padding: '1rem',
-              width: '100%', // Change to 100% for responsiveness
-              borderRadius: '8px',
-              border: '0.3px solid #9E88B2',
-              fontSize: '14px',
-              fontFamily: 'Nunito Sans, sans-serif',
-              backgroundColor: 'transparent',
-              color: '#9E88B2',
-            }}
-          />
-          {/* Magnifying glass icon */}
-          <FontAwesomeIcon
-            icon={faSearch}
-            style={{
-              position: 'absolute',
-              right: '1rem',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              color: '#9E88B2',
-            }}
-          />
+  {/* Search Bar Section */}
+  <div className="flex justify-center items-center" style={{ marginTop: '2rem', width: '90%', marginLeft: '1rem', marginRight: '1rem' }}>
+          <div style={{ position: 'relative', width: '100%', maxWidth: '500px' }}>
+            <input
+              type="text"
+              placeholder="Search with first or last name"
+              value={searchTerm} // Set the input value to searchTerm
+              onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm on input change
+              style={{
+                padding: '1rem',
+                width: '100%', // Change to 100% for responsiveness
+                borderRadius: '8px',
+                border: '0.3px solid #9E88B2',
+                fontSize: '14px',
+                fontFamily: 'Nunito Sans, sans-serif',
+                backgroundColor: 'transparent',
+                color: '#9E88B2',
+              }}
+            />
+            {/* Magnifying glass icon */}
+            <FontAwesomeIcon
+              icon={faSearch}
+              style={{
+                position: 'absolute',
+                right: '1rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: '#9E88B2',
+              }}
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Users Display Section */}
-      <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', width: '100%', height:'40%'}}>
-        <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif', width: '100%', maxWidth: '400px', padding: '1rem' }}>
-          <ul
+        {/* Users Display Section */}
+        <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', width: '100%', height:'40%'}}>
+          <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif', width: '100%', maxWidth: '400px', padding: '1rem' }}>
+            <ul
+              style={{
+                listStyleType: 'none',
+                padding: 0,
+                height: '200px', // Set a fixed height for scrollable list
+                overflowY: 'scroll', // Enable vertical scrolling
+                scrollbarWidth: 'none', // Hide scrollbar for Firefox
+                width: '100%', // Use 100% width for responsiveness
+                textAlign: 'center', // Center text inside the list
+              }}
+            >
+              {filteredUsers.length > 0 ? (
+                filteredUsers.map((user, index) => (
+                  <li
+                    key={index}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '1rem', // Space between each user entry
+                      textAlign: 'center', // Center text for each user entry
+                    }}
+                  >
+                    <span style={{ marginRight: '8px' }}>{user.getFullName()}</span> {/* Add margin to the right */}
+                    <img
+                      src="/userIcon.svg" // Single image used for the icon
+                      alt="User Icon"
+                      style={{
+                        width: '24px', // Set the width of the icon
+                        height: '24px', // Set the height of the icon
+                        cursor: 'pointer',
+                        marginLeft: '8px', // Add margin to the left of the icon
+                        filter: clickedUser === user ? 'hue-rotate(240deg)' : 'none', // Change color to purple when clicked
+                        opacity: clickedUser === user ? 1 : 0.6, // Optionally adjust opacity for a visual effect
+                        transition: 'filter 0.3s, opacity 0.3s', // Smooth transition
+                      }}
+                      onClick={() => handleIconClick(user)} // Handle icon click
+                    />
+                  </li>
+                ))
+              ) : (
+                <li>No users found</li>
+              )}
+            </ul>
+          </div>
+        </div>
+
+
+        {/* Start Striiding Button */}
+        <div className="flex justify-center" style={{marginBottom:'1rem' }}>
+          <button
+          onClick={handleStartStriiding}
             style={{
-              listStyleType: 'none',
-              padding: 0,
-              height: '200px', // Set a fixed height for scrollable list
-              overflowY: 'scroll', // Enable vertical scrolling
-              scrollbarWidth: 'none', // Hide scrollbar for Firefox
-              width: '100%', // Use 100% width for responsiveness
-              textAlign: 'center', // Center text inside the list
+              
+              backgroundColor: '#6B18D8',
+              color: 'white',
+              padding: '1rem 7rem',
+              fontSize: '14px',
+              borderRadius: '8px',
+              fontFamily: 'Montserrat, sans-serif',
+              cursor: 'pointer',
+              border: 'none',
+              // maxWidth:'50rem',
+              // minWidth:'30rem',
             }}
           >
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user, index) => (
-                <li
-                  key={index}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: '1rem', // Space between each user entry
-                    textAlign: 'center', // Center text for each user entry
-                  }}
-                >
-                  <span style={{ marginRight: '8px' }}>{user.getFullName()}</span> {/* Add margin to the right */}
-                  <img
-                    src="/userIcon.svg" // Single image used for the icon
-                    alt="User Icon"
-                    style={{
-                      width: '24px', // Set the width of the icon
-                      height: '24px', // Set the height of the icon
-                      cursor: 'pointer',
-                      marginLeft: '8px', // Add margin to the left of the icon
-                      filter: clickedUser === user ? 'hue-rotate(240deg)' : 'none', // Change color to purple when clicked
-                      opacity: clickedUser === user ? 1 : 0.6, // Optionally adjust opacity for a visual effect
-                      transition: 'filter 0.3s, opacity 0.3s', // Smooth transition
-                    }}
-                    onClick={() => handleIconClick(user)} // Handle icon click
-                  />
-                </li>
-              ))
-            ) : (
-              <li>No users found</li>
-            )}
-          </ul>
+            Start Striiding!
+          </button>
         </div>
       </div>
-
-
-      {/* Start Striiding Button */}
-      <div className="flex justify-center" style={{marginBottom:'1rem' }}>
-        <button
-        onClick={handleStartStriiding}
-          style={{
-            
-            backgroundColor: '#6B18D8',
-            color: 'white',
-            padding: '1rem 7rem',
-            fontSize: '14px',
-            borderRadius: '8px',
-            fontFamily: 'Montserrat, sans-serif',
-            cursor: 'pointer',
-            border: 'none',
-            // maxWidth:'50rem',
-            // minWidth:'30rem',
-          }}
-        >
-          Start Striiding!
-        </button>
       </div>
     </div>
   );

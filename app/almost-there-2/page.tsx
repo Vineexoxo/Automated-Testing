@@ -79,93 +79,87 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#292732] w-full text-white justify-start">
+    <div className="flex flex-col min-h-screen w-full bg-[#292732] text-white">
       {step === 1 ? (
-        <div className="flex flex-col h-full justify-center">
+        <div className="flex-grow flex flex-col justify-between px-2 py-10 text-white ">
           {/* Title Section */}
-          <div className="mt-8 w-full">
-            <div className="text-[#E0631D] font-semibold text-[24px] text-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <div>
+            <div className="text-[#E0631D] font-semibold text-center font-bold text-2xl sm:text-2xl md:text-3xl lg:text-4xl"  style={{ fontFamily: 'Montserrat, sans-serif' }}>
               You're almost there!
             </div>
-          </div>
-  
-          {/* Subheading Section */}
-          <div className="mt-5 w-full">
-            <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
-              <div>Tell Us About Yourself!</div>
-              <div>This information is <span style={{ color: '#00A886' }}>private</span> and will not be displayed on your profile.</div>
+
+            <div className="text-white text-center mt-2 sm:mt-4 md:mt-6 " style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+              <p className="text-md md:text-xl lg:text-2xl">Tell Us About Yourself!</p>
+              <p className="text-md md:text-xl lg:text-2xl">
+                This information is <span style={{ color: '#00A886' }}>private</span> and will not be displayed on your profile.
+              </p>
             </div>
-          </div>
-  
-          {/* Form Fields Section */}
-          <div className="flex justify-center mt-5">
-            <div className="mt-2 mb-2 pr-0 max-w-md w-full">
-              <div className="text-white">
-                <div className="flex flex-col space-y-5 ml-2 mr-2 mb-5">
-                  {/* Occupation Field */}
-                  <div className="bg-[#00A886] rounded-lg">
-                    <div className="p-2">
-                      <label htmlFor="occupation" className="text-[#F4E9E9] pl-4">Occupation *</label>
-                    </div>
-                    <div className="bg-white rounded-b-md pl-4">
-                      <input
-                        id="occupation"
-                        type="text"
-                        placeholder="ex. Engineer"
-                        value={occupation}
-                        onChange={(e) => setOccupation(e.target.value)}
-                        className="w-full p-2 bg-transparent border-none outline-none text-black"
-                      />
-                    </div>
-                  </div>
-  
-                  {/* Gender Dropdown */}
-                  <div className="bg-[#00A886] text-[#F4E9E9] rounded-lg">
-                    <div className="p-2">
-                      <label htmlFor="gender" className="pl-4">Gender *</label>
-                    </div>
-                    <div className="bg-white rounded-b-lg relative">
-                      <select
-                        id="gender"
-                        value={gender}
-                        onChange={(e) => setGender(e.target.value)}
-                        className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
-                      >
-                        <option value="" disabled>Select from the dropdown</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
-                      </select>
-                      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-  
-                  {/* Birthday Field */}
-                  <div className="bg-[#00A886] text-[#F4E9E9] rounded-lg">
-                    <div className="p-2">
-                      <label htmlFor="birthday" className="pl-4">Birthday *</label>
-                    </div>
-                    <div className="bg-white rounded-b-md pl-2">
-                      <input
-                        id="birthday"
-                        type="date"
-                        value={birthday}
-                        onChange={(e) => setBirthday(e.target.value)}
-                        className="w-full p-2 bg-transparent border-none outline-none text-black placeholder:font-semibold pl-4"
-                      />
-                    </div>
-                  </div>
+
+            <div className="text-white mt-6 sm:mt-10 md:mt-6 lg:mt-8 ml-4 mr-4" >
+           <div className="flex flex-col space-y-4">
+      
+            {/* Occupation Field */}
+            <div className="bg-[#00A886] rounded-lg">
+              <div className="p-2">
+                <label htmlFor="occupation" className="text-[#F4E9E9] pl-4">Occupation *</label>
+              </div>
+              <div className="bg-white rounded-b-md pl-4">
+                <input
+                  id="occupation"
+                  type="text"
+                  placeholder="ex. Engineer"
+                  value={occupation}
+                  onChange={(e) => setOccupation(e.target.value)}
+                  className="w-full p-2 bg-transparent border-none outline-none text-black"
+                />
+              </div>
+            </div>
+
+            {/* Gender Dropdown */}
+            <div className="bg-[#00A886] rounded-lg">
+              <div className="p-2">
+                <label htmlFor="gender" className="text-[#F4E9E9] pl-4">Gender *</label>
+              </div>
+              <div className="bg-white rounded-b-md pl-4 relative">
+                <select
+                  id="gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
+                >
+                  <option value="" disabled>Select from the dropdown</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
+                  </svg>
                 </div>
               </div>
             </div>
+
+            {/* Birthday Field */}
+            <div className="bg-[#00A886] rounded-lg">
+              <div className="p-2">
+                <label htmlFor="birthday" className="text-[#F4E9E9] pl-4">Birthday *</label>
+              </div>
+              <div className="bg-white rounded-b-md pl-4">
+                <input
+                  id="birthday"
+                  type="date"
+                  value={birthday}
+                  onChange={(e) => setBirthday(e.target.value)}
+                  className="w-full p-2 bg-transparent border-none outline-none text-black placeholder:font-semibold pl-4"
+                />
+              </div>
+            </div>
+
           </div>
-  
-          {/* Checkbox Section */}
-          <div className="flex items-center ml-3 justify-center">
+        </div>
+                  {/* Checkbox Section */}
+                  <div className="flex items-center ml-3 justify-center mt-5 sm:mt-6 md:mt-8 lg:mt-10">
             <input
               type="checkbox"
               checked={isChecked}
@@ -178,47 +172,82 @@ const Page = () => {
               <span style={{ textDecoration: 'underline' }}> Privacy Policy</span>.
             </label>
           </div>
+      </div>
   
-          {/* Arrow icons */}
-          <div className="flex justify-end items-end absolute bottom-5 right-5 ">
-            <div className="flex -space-x-8">
-              {[0.6, 0.8, 1].map((opacity, index) => (
-                <div key={index} onClick={handleNextStep} className="cursor-pointer">
-                  <svg
-                    width="60"
-                    height="60"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="transition-transform duration-300 hover:scale-110">
-                    <path
-                      d="M8 4l8 8-8 8"
-                      stroke={`rgba(255, 255, 255, ${opacity})`}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      className="transition-all duration-300" />
-                  </svg>
-                </div>
-              ))}
+         {/* Arrow icons at the bottom */}
+         <div className="flex justify-end" style={{ marginBottom: '1rem', paddingRight: '0.7rem' }}> 
+          <div className="flex -space-x-8"> 
+            {/* Arrow with smooth hover effect */}
+            <div onClick={handleNextStep} className="cursor-pointer">
+              <svg 
+                width="60" 
+                height="60" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="transition-transform duration-300 hover:scale-110">
+                <path 
+                  d="M8 4l8 8-8 8" 
+                  stroke="rgba(255, 255, 255, 0.6)" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  className="transition-all duration-300" />
+              </svg>
+            </div>
+
+            <div onClick={handleNextStep} className="cursor-pointer">
+              <svg 
+                width="60" 
+                height="60" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="transition-transform duration-300 hover:scale-110">
+                <path 
+                  d="M8 4l8 8-8 8" 
+                  stroke="rgba(255, 255, 255, 0.8)" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  className="transition-all duration-300" />
+              </svg>
+            </div>
+
+            <div onClick={handleNextStep} className="cursor-pointer">
+              <svg 
+                width="60" 
+                height="60" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="transition-transform duration-300 hover:scale-110">
+                <path 
+                  d="M8 4l8 8-8 8" 
+                  stroke="rgba(255, 255, 255, 1)" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  className="transition-all duration-300" />
+              </svg>
             </div>
           </div>
         </div>
+
+      </div>
       ) : (
-          <div className="flex flex-col h-full justify-center">
+        <div className="flex-grow flex flex-col justify-between px-2 py-10 text-white ">
           {/* Title Section */}
-          <div className="mt-8 w-full">
-            <div className="text-[#E0631D] font-semibold text-[24px] text-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <div>
+          <div className="text-[#E0631D] font-semibold text-center font-bold text-2xl sm:text-2xl md:text-3xl lg:text-4xl"  style={{ fontFamily: 'Montserrat, sans-serif' }}>
               One last step!
             </div>
-          </div>
-  
-          {/* Subheading Section */}
-          <div className="mt-5 w-full">
+            <div className="text-white text-center mt-2 sm:mt-4 md:mt-6 " style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
             <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
-              <div>Please complete your profile!</div>
-              <div>This information will be <span style={{ color: '#FFBF42' }}>public</span> and will help you connect with people.</div>
+              <p className="text-md md:text-xl lg:text-2xl">Please complete your profile!</p>
+              <p className="text-md md:text-xl lg:text-2xl">This information will be <span style={{ color: '#FFBF42' }}>public</span> and will help you connect with people.</p>
             </div>
           </div>  
+          </div>
+  
+
   
           {/* Camera icon and bio */}
           <div className="flex justify-center mt-4">
@@ -276,35 +305,93 @@ const Page = () => {
                     />
                   </div>
                 </div>
+                <div className="bg-[#00A886] rounded-lg">
+              <div className="p-2">
+                <label htmlFor="gender" className="text-[#F4E9E9] pl-4">Gender *</label>
+              </div>
+
+              {/* Pronouns Field */}
+              <div className="bg-white rounded-b-md pl-2 relative">
+                <select
+                  id="pronouns"
+                  value={pronouns}
+                  onChange={(e) => setPronouns(e.target.value)}
+                  className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
+                >
+                  <option value="" disabled>Select from the dropdown</option>
+                  <option value="male">She/Her</option>
+                  <option value="female">He/Him</option>
+                  <option value="other">They/Them</option>
+                </select>
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
+                  </svg>
+                </div>
+              </div>
+            </div>
               </div>
             </div>
           </div>
 
-              {/* Arrow Icons */}
-          <div className="flex justify-end items-end absolute bottom-5 right-5 ">
-            <div className="flex -space-x-8">
-              {[0.6, 0.8, 1].map((opacity, index) => (
-                <div key={index} onClick={handleNextStep} className="cursor-pointer">
-                  <svg
-                    width="60"
-                    height="60"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="transition-transform duration-300 hover:scale-110">
-                    <path
-                      d="M8 4l8 8-8 8"
-                      stroke={`rgba(255, 255, 255, ${opacity})`}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      className="transition-all duration-300" />
-                  </svg>
-                </div>
-              ))}
+        {/* Arrow icons at the bottom */}
+        <div className="flex justify-end" style={{ marginBottom: '1rem', paddingRight: '0.7rem' }}> 
+          <div className="flex -space-x-8"> 
+            {/* Arrow with smooth hover effect */}
+            <div onClick={handleNextStep} className="cursor-pointer">
+              <svg 
+                width="60" 
+                height="60" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="transition-transform duration-300 hover:scale-110">
+                <path 
+                  d="M8 4l8 8-8 8" 
+                  stroke="rgba(255, 255, 255, 0.6)" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  className="transition-all duration-300" />
+              </svg>
+            </div>
+
+            <div onClick={handleNextStep} className="cursor-pointer">
+              <svg 
+                width="60" 
+                height="60" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="transition-transform duration-300 hover:scale-110">
+                <path 
+                  d="M8 4l8 8-8 8" 
+                  stroke="rgba(255, 255, 255, 0.8)" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  className="transition-all duration-300" />
+              </svg>
+            </div>
+
+            <div onClick={handleNextStep} className="cursor-pointer">
+              <svg 
+                width="60" 
+                height="60" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="transition-transform duration-300 hover:scale-110">
+                <path 
+                  d="M8 4l8 8-8 8" 
+                  stroke="rgba(255, 255, 255, 1)" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  className="transition-all duration-300" />
+              </svg>
             </div>
           </div>
-
         </div>
+
+      </div>
       )}
     </div>
   );
