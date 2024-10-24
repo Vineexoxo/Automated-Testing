@@ -1,42 +1,34 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/db";
 
 const Page = async () => {
   const router = useRouter();
-  const { userId } = auth();
-  const isAuth = !!userId;
-  const user = await currentUser();
+  const [isAuth, setIsAuth] = useState(false);
 
-  if (!user) {
-    return null;
-  }
+  useEffect(() => {
+    const fetchAuthStatus = async () => {
+      const response = await fetch('/api/authenticate');
+      if (response.ok) {
+        const data = await response.json();
+        setIsAuth(data.isAuth);
+      } else {
+        router.push("/");
+      }
+    };
 
-  console.log(user);
-
-  const loggedInUser = await prisma.user.findUnique({
-    where: {clerkUserId: user.id},
-  });
-  if (!loggedInUser) {
-    await prisma.user.create({
-      data: {
-        clerkUserId: user.id,
-        name: `${user.firstName} ${user.lastName}`,
-        imageUrl: user.imageUrl,
-        email: user.emailAddresses[0].emailAddress,
-      },
-    });
-  }
+    fetchAuthStatus();
+  }, [router]);
 
   const handleNextPage = () => {
     router.push('/almost-there-2');
   };
 
   if (!isAuth) {
-    router.push("/");
+    return null;
   }
 
   return (
