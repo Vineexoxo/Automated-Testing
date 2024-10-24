@@ -79,7 +79,7 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#292732] text-white px-4">
+    <div className="flex flex-col min-h-screen bg-[#292732] w-[100vw] text-white">
       {step === 1 ? (
         <div className="flex flex-col h-full">
           <div style={{ marginTop: '2rem' }}>
@@ -98,7 +98,7 @@ const Page = () => {
             </div>
           </div>
 
-          <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
+          <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingRight: '1rem' }}>
             <div className="text-white">
               <div className="flex flex-col space-y-4">
                 {/* Occupation Field */}
