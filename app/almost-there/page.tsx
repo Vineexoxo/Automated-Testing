@@ -23,7 +23,7 @@ const Page = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-white px-4 bg-gradient-to-tr from-[#3A00A4] to-[#802EE8]">
+    <div className="flex flex-col items-center justify-center text-white px-4 bg-gradient-to-tr from-[#3A00A4] to-[#802EE8]">
       <div className="w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl flex flex-col">
         
         {/* Wrapper for Striide with inline style for top margin */}

@@ -29,13 +29,13 @@ export default function RootLayout({
       <html lang="en" className="h-full">
         <body className={`${inter.className} h-full`}>
           <ClerkLoading>
-            <div className="flex items-center justify-center h-screen bg-[#292732]">
+            <div className="flex items-center justify-center h-screen bg-gradient-to-tr from-[#3A00A4] to-[#802EE8]">
               <span className="styled-text">Striide</span>
             </div>
           </ClerkLoading>
 
           <ClerkLoaded>
-            <div className="min-h-screen bg-[#292732]">
+            <div className="min-h-screen bg-gradient-to-tr from-[#3A00A4] to-[#802EE8]">
               {children}
             </div>
           </ClerkLoaded>
