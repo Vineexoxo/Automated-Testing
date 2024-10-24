@@ -32,7 +32,7 @@ const FriendManager: React.FC<FriendManagerProps> = ({ users }) => {
 
   return (
     <div style={{ marginTop: '1rem', width: '200px', height: '320px', display: 'flex', justifyContent: 'center' }}>
-      <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+      <div className="text-white text-center">
         <div style={{ padding: '1rem', border: 'none' }}>
           <ul
             style={{

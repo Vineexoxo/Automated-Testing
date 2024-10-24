@@ -30,7 +30,7 @@ const Page = () => {
 
         {/* Wrapper for Striide with inline style for top margin */}
         <div style={{ paddingTop: '1rem', textAlign: 'center', marginRight: '1rem', marginLeft: '1rem' }}>
-          <div className="text-center text-white" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+          <div className="text-center text-white">
             <div>
               Your insights are invaluable. During this beta phase, we encourage you to
               share your feedback, report any issues, and suggest improvements.

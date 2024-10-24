@@ -91,7 +91,7 @@ const Page = () => {
 
           {/* Subheading Section */}
           <div className="mt-5 w-full">
-            <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+            <div className="text-white text-center">
               <div>Tell Us About Yourself!</div>
               <div>This information is <span style={{ color: '#00A886' }}>private</span> and will not be displayed on your profile.</div>
             </div>
@@ -172,7 +172,7 @@ const Page = () => {
               onChange={() => setIsChecked(!isChecked)}
               className="mr-4"
             />
-            <label className="text-white" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+            <label className="text-white">
               I hereby confirm that I have read and agree with the
               <span style={{ textDecoration: 'underline' }}> Terms of Service</span> and
               <span style={{ textDecoration: 'underline' }}> Privacy Policy</span>.
@@ -214,7 +214,7 @@ const Page = () => {
 
           {/* Subheading Section */}
           <div className="mt-5 w-full">
-            <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+            <div className="text-white text-center">
               <div>Please complete your profile!</div>
               <div>This information will be <span style={{ color: '#FFBF42' }}>public</span> and will help you connect with people.</div>
             </div>
