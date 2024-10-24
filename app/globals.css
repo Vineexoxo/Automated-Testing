@@ -4,14 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
-=======
 body {
   font-family: 'Montserrat', sans-serif;
   font-family: 'Nunito Sans', sans-serif;
   background: linear-gradient(90deg, #802EE8 0%, #5044F1 100%);
 }
->>>>>>> 1047e9fa668cbe159d7092802e1dbd4392f34a6a
 
 
 .styled-text {
