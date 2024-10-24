@@ -15,6 +15,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@prisma/client": "^5.20.0",
+    "html5-qrcode": "^2.3.8",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.1",
     "next": "^14.2.16",
