@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import smileImages from '../src/assets/smileImages.json'; // Adjust the path based on your project structure
+import cityData from '../src/assets/US_States_and_Cities.json'; // Adjust the path as necessary
 
 interface BioPopupProps {
   isOpen: boolean;
@@ -7,9 +7,10 @@ interface BioPopupProps {
 }
 
 const BioPopup: React.FC<BioPopupProps> = ({ isOpen, onClose }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const [inputValue, setInputValue] = useState('');
+  const [filteredCities, setFilteredCities] = useState([]);
   if (!isOpen) return null;
+  
 
   return (
     <>
@@ -21,12 +22,12 @@ const BioPopup: React.FC<BioPopupProps> = ({ isOpen, onClose }) => {
 
       {/* Popup content */}
       <div
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-60 bg-black text-white px-10 py-5 rounded-xl flex flex-col items-center justify-center z-60"
-        style={{
+      className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-60 bg-black text-white px-10 py-5 rounded-xl flex flex-col z-60"
+      style={{
           width: '80vw', // Adjusts to 80% of the viewport width
           maxWidth: '600px', // Sets a max width for larger screens
           minWidth: '300px', // Ensures a minimum width for small screens
-          height: 'auto',
+          height: '300px',
           maxHeight: '90vh', // Limits the popup height to 90% of the viewport height
           backdropFilter: 'blur(10px)', // Blur effect only on the popup
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)',
@@ -35,12 +36,14 @@ const BioPopup: React.FC<BioPopupProps> = ({ isOpen, onClose }) => {
         }}
       >
         {/* Search Bar with Smile Button Next to It */}
-        <div className="flex items-center w-full mb-4">
+        <div className="flex items-center w-full mt-3">
           {/* Search Input */}
           <div className="relative flex-grow">
             <input
               type="text"
               placeholder="City"
+              value={inputValue}
+              // onChange={handleInputChange}
               className="bg-transparent border border-gray-300 text-white w-full py-2 px-4 pr-10 rounded-md focus:outline-none"
               style={{
                 borderColor: 'rgba(255, 255, 255, 255)',
@@ -65,8 +68,8 @@ const BioPopup: React.FC<BioPopupProps> = ({ isOpen, onClose }) => {
               </svg>
             </div>
           </div>
-{/* Smile Button with Dropdown */}
-<div className="relative">
+          {/* Smile Button */}
+          <div className="relative">
             <button
               className="ml-4 bg-transparent border border-gray-300 p-2 rounded-md flex justify-center items-center focus:outline-none"
               style={{
@@ -74,31 +77,13 @@ const BioPopup: React.FC<BioPopupProps> = ({ isOpen, onClose }) => {
                 borderRadius: '8px',
                 width: '55px',
               }}
-              onClick={() => setIsDropdownOpen((prev) => !prev)}
             >
               <img src="/smile.svg" alt="Smile icon" className="w-6 h-6" />
             </button>
-
-            {/* Smile Images Dropdown */}
-            {isDropdownOpen && (
-              <div
-                className="absolute mt-2 left-0 right-0 max-h-10 overflow-y-auto bg-gray-800 rounded-md shadow-lg z-70"
-
-              >
-                {smileImages.map((image, index) => (
-                  <div key={index} className="p-1">
-                    <img
-                      src={image}
-                      alt={`Smile ${index + 1}`}
-                      className="w-10 h-10 cursor-pointer"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         </div>
-
+      {/* Spacer to push buttons to the bottom */}
+      <div className="flex-grow"></div>
 
 
         <div className="flex justify-center items-center mt-4 gap-2">
