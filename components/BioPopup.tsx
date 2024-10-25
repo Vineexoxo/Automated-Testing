@@ -4,9 +4,10 @@ import SearchBar from './searchbar'; // Adjust the path as necessary
 interface BioPopupProps {
   isOpen: boolean;
   onClose: () => void;
+  addCity: (city: string) => void;
 }
 
-const BioPopup: React.FC<BioPopupProps> = ({ isOpen, onClose }) => {
+const BioPopup: React.FC<BioPopupProps> = ({ isOpen, onClose, addCity }) => {
   const [searchBars, setSearchBars] = useState([{ value: '' }]);
 
   if (!isOpen) return null;
@@ -20,6 +21,16 @@ const BioPopup: React.FC<BioPopupProps> = ({ isOpen, onClose }) => {
     newSearchBars[index].value = value;
     setSearchBars(newSearchBars);
   };
+    // Function to handle saving of cities
+    const handleSave = () => {
+      // Loop through each search bar and add the city
+      searchBars.forEach((bar) => {
+        if (bar.value) {
+          addCity(bar.value);  // Call addCity to store the value in page.tsx
+        }
+      });
+      onClose();  // Close the popup after saving
+    };
 
   return (
     <>
