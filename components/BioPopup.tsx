@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import smileImages from '../src/assets/smileImages.json'; // Adjust the path based on your project structure
 
 interface BioPopupProps {
   isOpen: boolean;
@@ -6,89 +7,158 @@ interface BioPopupProps {
 }
 
 const BioPopup: React.FC<BioPopupProps> = ({ isOpen, onClose }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-50 bg-black text-white px-10 py-5 rounded-xl flex flex-col items-center justify-center"
-      style={{
-        width: '80%',
-        maxWidth: '300px',
-        height: 'auto',
-        backdropFilter: 'blur(5px)',  // Blur effect only on the popup
-        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)',
-        zIndex: 1000,
-      }}
-    >
-      <div className="flex justify-between items-center w-full mb-4">
-        <input
-          type="text"
-          placeholder="City"
-          className="bg-transparent border-b border-gray-500 text-white w-full py-2 px-4"
-        />
-        <button className="ml-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-search"
+    <>
+      {/* Backdrop to block interaction with the rest of the screen */}
+      <div
+        className="fixed inset-0 z-50 bg-black bg-opacity-50"
+        onClick={onClose}
+      ></div>
+
+      {/* Popup content */}
+      <div
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-60 bg-black text-white px-10 py-5 rounded-xl flex flex-col items-center justify-center z-60"
+        style={{
+          width: '80vw', // Adjusts to 80% of the viewport width
+          maxWidth: '600px', // Sets a max width for larger screens
+          minWidth: '300px', // Ensures a minimum width for small screens
+          height: 'auto',
+          maxHeight: '90vh', // Limits the popup height to 90% of the viewport height
+          backdropFilter: 'blur(10px)', // Blur effect only on the popup
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)',
+          zIndex: 60, // Must be higher than the backdrop's z-index
+          overflowY: 'auto', // Allows scrolling if content exceeds max height
+        }}
+      >
+        {/* Search Bar with Smile Button Next to It */}
+        <div className="flex items-center w-full mb-4">
+          {/* Search Input */}
+          <div className="relative flex-grow">
+            <input
+              type="text"
+              placeholder="City"
+              className="bg-transparent border border-gray-300 text-white w-full py-2 px-4 pr-10 rounded-md focus:outline-none"
+              style={{
+                borderColor: 'rgba(255, 255, 255, 255)',
+                borderRadius: '8px',
+              }}
+            />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-search text-gray-400"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+          </div>
+{/* Smile Button with Dropdown */}
+<div className="relative">
+            <button
+              className="ml-4 bg-transparent border border-gray-300 p-2 rounded-md flex justify-center items-center focus:outline-none"
+              style={{
+                borderColor: 'rgba(255, 255, 255, 255)',
+                borderRadius: '8px',
+                width: '55px',
+              }}
+              onClick={() => setIsDropdownOpen((prev) => !prev)}
+            >
+              <img src="/smile.svg" alt="Smile icon" className="w-6 h-6" />
+            </button>
+
+            {/* Smile Images Dropdown */}
+            {isDropdownOpen && (
+              <div
+                className="absolute mt-2 left-0 right-0 max-h-10 overflow-y-auto bg-gray-800 rounded-md shadow-lg z-70"
+
+              >
+                {smileImages.map((image, index) => (
+                  <div key={index} className="p-1">
+                    <img
+                      src={image}
+                      alt={`Smile ${index + 1}`}
+                      className="w-10 h-10 cursor-pointer"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+
+
+        <div className="flex justify-center items-center mt-4 gap-2">
+          <button
+            onClick={onClose}
+            className="flex items-center justify-center gap-2 px-4 py-1 rounded-full border border-white text-white"
+            style={{
+              fontSize: '14px',
+              fontFamily: 'Montserrat, sans-serif',
+              backgroundColor: 'transparent',
+              cursor: 'pointer',
+            }}
           >
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </button>
-      </div>
+            Close
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-x"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
 
-      <div className="flex justify-center items-center mt-4 gap-2">
-        <button
-          onClick={onClose}
-          className="flex items-center justify-center gap-2 px-4 py-1 rounded-full border border-white text-white"
-          style={{
-            fontSize: '14px',
-            fontFamily: 'Montserrat, sans-serif',
-            backgroundColor: 'transparent',
-            cursor: 'pointer',
-          }}
-        >
-          Close
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-x"
+          <button
+            onClick={onClose} // Or you can change this to another action
+            className="flex items-center justify-center px-4 py-5 rounded-full text-white"
+            style={{
+              fontSize: '14px',
+              fontFamily: 'Montserrat, sans-serif',
+              backgroundColor: 'transparent',
+              cursor: 'pointer',
+            }}
           >
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <button
-          onClick={onClose}  // Or you can change this to another action
-          className="flex items-center justify-center px-4 py-5 rounded-full text-white"
-          style={{
-            fontSize: '28px',
-            fontFamily: 'Montserrat, sans-serif',
-            backgroundColor: 'transparent',
-            cursor: 'pointer',
-          }}
-        >
-          +
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-plus"
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+        </div>
       </div>
-
-    </div>
+    </>
   );
 };
 
