@@ -19,7 +19,7 @@ const Page = () => {
           src="/thankyou.svg" // Replace with the correct path to your SVG file
           alt="Thank You"
           height={800}
-          width={1280} // Adjust width for responsiveness
+          width={2000} // Adjust width for responsiveness
           className="max-w-full h-auto"
         />
       </div>
