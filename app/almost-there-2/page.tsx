@@ -8,6 +8,7 @@ import { PrismaClient } from '@prisma/client';
 
 
 const prisma = new PrismaClient();
+import BioPopup from '../../components/BioPopup';
 
 const Page = () => {
   const router = useRouter();
@@ -24,6 +25,14 @@ const Page = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [pronouns, setPronouns] = useState('');
+
+  //bio
+  const [isBioPopupOpen, setIsBioPopupOpen] = useState(false);
+
+  // Function to toggle the BioPopup
+  const toggleBioPopup = () => {
+    setIsBioPopupOpen(!isBioPopupOpen);
+  };
 
   useEffect(() => {
     console.log(user);
@@ -268,19 +277,24 @@ const Page = () => {
   
       {/* Bio Section */}
       <div className="mt-4 mx-4">
-        <div 
-          className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2"
-          onClick={togglePopup} // Open popup on click
-          style={{ color: '#FFFFFF', cursor: 'pointer' }}
-        >
-          <span className="text-lg font-semibold">Bio</span>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-      </div>  
-  
-          <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
+            {/* Button to trigger the BioPopup */}
+            <div 
+              className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2"
+              onClick={toggleBioPopup} // Open popup on click
+              style={{ color: '#FFFFFF', cursor: 'pointer' }}
+            >
+              <span className="text-lg font-semibold">Bio</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+                {/* BioPopup Component */}
+            <BioPopup 
+              isOpen={isBioPopupOpen}   // Pass isOpen state
+              onClose={toggleBioPopup}  // Close popup on button click
+            />
+
+        <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
             <div className="text-white">
               <div className="flex flex-col space-y-4">
                 {/* First Name Field */}
@@ -344,6 +358,9 @@ const Page = () => {
               </div>
             </div>
           </div>
+      </div>  
+  
+         
 
         {/* Arrow icons at the bottom */}
         <div className="flex justify-end" style={{ marginBottom: '1rem', paddingRight: '0.7rem' }}> 
