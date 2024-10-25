@@ -4,10 +4,39 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/db";
+import { useUser } from '@clerk/nextjs';
 
 const Page = () => {
   const router = useRouter();
   const [isAuth, setIsAuth] = useState(false);
+  const { user, isLoaded } = useUser();
+
+  useEffect(() => {
+    if (isLoaded && user) {
+
+      // Check if occupation exists and redirect if it does
+      const checkOccupation = async () => {
+        try {
+          const response = await fetch('/api/check-occupation', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId: user.id }),
+          });
+
+          const result = await response.json();
+          if (result.occupationExists) {
+            router.push('/get-started');
+          }
+        } catch (error) {
+          console.error('Error checking occupation:', error);
+        }
+      };
+
+      checkOccupation();
+    }
+  }, [isLoaded, user, router]);
 
   useEffect(() => {
     const fetchAuthStatus = async () => {

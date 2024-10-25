@@ -26,8 +26,30 @@ const Page = () => {
       // Auto-fill first name and last name
       setFirstName(user.firstName ?? '');
       setLastName(user.lastName ?? '');
+
+      // Check if occupation exists and redirect if it does
+      const checkOccupation = async () => {
+        try {
+          const response = await fetch('/api/check-occupation', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId: user.id }),
+          });
+
+          const result = await response.json();
+          if (result.occupationExists) {
+            router.push('/get-started');
+          }
+        } catch (error) {
+          console.error('Error checking occupation:', error);
+        }
+      };
+
+      checkOccupation();
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user, router]);
 
   const handleNextStep = async () => {
     if (step === 1) {
