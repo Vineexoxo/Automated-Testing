@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation'; // Change the import to next/naviga
 import { useSwipeable } from 'react-swipeable'; // For swipe functionality
 import CopyLinkPopup from '../../components/copyLinkPopup';
 import QRPopup from '../../components/QRPopup';
+import UserDisplay from '../../components/UserDisplay';
+
 const Page = () => {
   // State to manage the visibility of the pop-up
   const [showPopup, setShowPopup] = useState(false);
@@ -89,7 +91,7 @@ const Page = () => {
 
   return (
   <div className="flex flex-col min-h-screen w-full bg-[#292732] text-white">        <div className="flex-grow flex flex-col justify-between px-2 py-10 text-white ">
-        <div className="flex-grow flex flex-col justify-between px-1 text-white ">
+        <div className="flex-grow flex flex-col justify-between px-4 text-white ">
           {/* Title Section */}
           <div>
             <div className="text-[#E0631D] font-semibold text-center font-bold text-2xl sm:text-2xl md:text-3xl lg:text-4xl"  style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -100,22 +102,24 @@ const Page = () => {
               <p className="text-md md:text-xl lg:text-2xl">For the app to work, your friends need to be here too. Let's invite as many as possible!</p>
           </div>
 
-          <div className="flex space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10 w-full max-w-4xl mt-5 sm:mt-5 md:mt-7 lg:mt-9 ">
-          {/* Copy Invite Link Button */}
-            <button
-            onClick={handleCopyLink} // Attach the click handler
-            className="bg-[#00A886] text-white text-xs sm:text-s md:text-base lg:text-lg py-4 rounded-lg font-nunito w-full max-w-xs sm:max-w-sm lg:max-w-md min-w-[100px] sm:min-w-[150px] md:min-w-[200px] cursor-pointer"
-            >
-            Copy invite link
-            </button>
+          <div className="flex justify-center w-full mt-5 sm:mt-5 md:mt-7 lg:mt-9">
+            <div className="flex space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10 w-full max-w-4xl">
+              {/* Copy Invite Link Button */}
+              <button
+                onClick={handleCopyLink}
+                className="bg-[#00A886] text-white text-xs sm:text-s md:text-base lg:text-lg py-4 rounded-lg font-nunito w-full max-w-xs sm:max-w-sm lg:max-w-md min-w-[100px] sm:min-w-[150px] md:min-w-[200px] cursor-pointer"
+              >
+                Copy invite link
+              </button>
 
-          {/* Add by QR Code Button */}
-            <button
-            onClick={handleShowQRPopup} // Attach the click handler to open QR code popup
-            className="bg-[#00A886] text-white text-xs sm:text-s md:text-base lg:text-lg rounded-lg font-nunitopy-3 sm:py-3 md:py-4 lg:py-5 w-full max-w-xs sm:max-w-sm lg:max-w-md min-w-[100px] sm:min-w-[150px] md:min-w-[200px] cursor-pointer"
-            >
-            Add by QR code
-            </button>
+              {/* Add by QR Code Button */}
+              <button
+                onClick={handleShowQRPopup}
+                className="bg-[#00A886] text-white text-xs sm:text-s md:text-base lg:text-lg rounded-lg font-nunito py-3 sm:py-3 md:py-4 lg:py-5 w-full max-w-xs sm:max-w-sm lg:max-w-md min-w-[100px] sm:min-w-[150px] md:min-w-[200px] cursor-pointer"
+              >
+                Add by QR code
+              </button>
+            </div>
           </div>
           {/* Search Bar Section */}
         <div className="flex justify-center items-center mt-8 sm:mt-10 md:mt-10 lg:mt-12 " style={{ width: '100%', }}>
@@ -151,56 +155,11 @@ const Page = () => {
         </div>
 
         {/* Users Display Section */}
-        <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', width: '100%', height:'40%'}}>
-          <div className="text-white text-center" style={{ fontFamily: 'Nunito Sans, sans-serif', width: '100%', maxWidth: '400px', padding: '1rem' }}>
-            <ul
-              style={{
-                listStyleType: 'none',
-                padding: 0,
-                height: '200px', // Set a fixed height for scrollable list
-                overflowY: 'scroll', // Enable vertical scrolling
-                scrollbarWidth: 'none', // Hide scrollbar for Firefox
-                width: '100%', // Use 100% width for responsiveness
-                textAlign: 'center', // Center text inside the list
-              }}
-            >
-              {filteredUsers.length > 0 ? (
-                filteredUsers.map((user, index) => (
-                  <li
-                    key={index}
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      marginBottom: '1rem', // Space between each user entry
-                      textAlign: 'center', // Center text for each user entry
-                    }}
-                  >
-                    <span style={{ marginRight: '8px' }}>{user.getFullName()}</span> {/* Add margin to the right */}
-                    <img
-                      src="/userIcon.svg" // Single image used for the icon
-                      alt="User Icon"
-                      style={{
-                        width: '24px', // Set the width of the icon
-                        height: '24px', // Set the height of the icon
-                        cursor: 'pointer',
-                        marginLeft: '8px', // Add margin to the left of the icon
-                        filter: clickedUser === user ? 'hue-rotate(240deg)' : 'none', // Change color to purple when clicked
-                        opacity: clickedUser === user ? 1 : 0.6, // Optionally adjust opacity for a visual effect
-                        transition: 'filter 0.3s, opacity 0.3s', // Smooth transition
-                      }}
-                      onClick={() => handleIconClick(user)} // Handle icon click
-                    />
-                  </li>
-                ))
-              ) : (
-                <li>No users found</li>
-              )}
-            </ul>
-          </div>
+        <div>
+          <UserDisplay users={filteredUsers} onIconClick={handleIconClick} clickedUser={clickedUser} />
         </div>
 
-        </div>
+      </div>
 
 
       <div className="flex items-center  " >
