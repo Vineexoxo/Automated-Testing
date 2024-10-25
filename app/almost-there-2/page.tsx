@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useUser } from '@clerk/nextjs';
 import { PrismaClient } from '@prisma/client';
 
+
 const prisma = new PrismaClient();
 
 const Page = () => {
@@ -76,6 +77,12 @@ const Page = () => {
         alert('Please fill in all fields before proceeding.');
       }
     }
+
+  };
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
   };
 
   return (
@@ -103,7 +110,7 @@ const Page = () => {
               <div className="p-2">
                 <label htmlFor="occupation" className="text-[#F4E9E9] pl-4">Occupation *</label>
               </div>
-              <div className="bg-white rounded-b-md pl-4">
+              <div className="bg-white rounded-b-md pl-4 relative">
                 <input
                   id="occupation"
                   type="text"
@@ -259,15 +266,19 @@ const Page = () => {
             />
           </div>
   
-          {/* Bio Section */}
-          <div className="mt-4 mx-4">
-            <div className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2" style={{ color: '#FFFFFF' }}>
-              <span className="text-lg font-semibold">Bio</span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-          </div>  
+      {/* Bio Section */}
+      <div className="mt-4 mx-4">
+        <div 
+          className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2"
+          onClick={togglePopup} // Open popup on click
+          style={{ color: '#FFFFFF', cursor: 'pointer' }}
+        >
+          <span className="text-lg font-semibold">Bio</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>  
   
           <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
             <div className="text-white">

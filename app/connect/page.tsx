@@ -5,9 +5,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Change the import to next/navigation
 import { useSwipeable } from 'react-swipeable'; // For swipe functionality
-import RemoveFriend from '../../components/RemoveFriend'; // Adjust the import path as necessary
-
-
+import CopyLinkPopup from '../../components/copyLinkPopup';
+import QRPopup from '../../components/QRPopup';
 const Page = () => {
   // State to manage the visibility of the pop-up
   const [showPopup, setShowPopup] = useState(false);
@@ -17,7 +16,6 @@ const Page = () => {
   const [scanMessage, setScanMessage] = useState(''); // State to manage scan messages
   const [clickedUser, setClickedUser] = useState<User | null>(null); // Track which user's icon was clicked
   const [inviteSent, setInviteSent] = useState(false);
-  const [removingUser, setRemovingUser] = useState<User | null>(null);
 
   const router = useRouter();
 
@@ -82,7 +80,6 @@ const Page = () => {
   const handleIconClick = (user: User) => {
     if (inviteSent && clickedUser === user) {
       // If an invite is sent and the same icon is clicked again, show the confirmation popup
-      setRemovingUser(user);
     } else if (!inviteSent) {
       // Handle adding friend logic here (e.g., send invite)
       setInviteSent(true); // Example: Set invite sent state
@@ -92,7 +89,7 @@ const Page = () => {
 
   return (
   <div className="flex flex-col min-h-screen w-full bg-[#292732] text-white">        <div className="flex-grow flex flex-col justify-between px-2 py-10 text-white ">
-        <div className="flex-grow flex flex-col justify-between px-2 text-white ">
+        <div className="flex-grow flex flex-col justify-between px-1 text-white ">
           {/* Title Section */}
           <div>
             <div className="text-[#E0631D] font-semibold text-center font-bold text-2xl sm:text-2xl md:text-3xl lg:text-4xl"  style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -102,127 +99,26 @@ const Page = () => {
           <div className="text-white text-center mt-2 sm:mt-4 md:mt-6 " style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
               <p className="text-md md:text-xl lg:text-2xl">For the app to work, your friends need to be here too. Let's invite as many as possible!</p>
           </div>
-        </div>
 
-
-      <div className="flex justify-center items-center mb-5 sm:mb-6 md:mb-8 lg:mb-9 " >
-        <div className="flex justify-center space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10 w-full max-w-4xl px-4 ">
+          <div className="flex space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10 w-full max-w-4xl mt-5 sm:mt-5 md:mt-7 lg:mt-9 ">
           {/* Copy Invite Link Button */}
-          <button
+            <button
             onClick={handleCopyLink} // Attach the click handler
-            className="bg-[#00A886] text-white text-xs sm:text-s md:text-base lg:text-lg rounded-lg font-nunito py-3 sm:py-3 md:py-4 lg:py-5 w-full max-w-xs sm:max-w-sm lg:max-w-md min-w-[100px] sm:min-w-[150px] md:min-w-[200px] cursor-pointer"
-          >
+            className="bg-[#00A886] text-white text-xs sm:text-s md:text-base lg:text-lg py-4 rounded-lg font-nunito w-full max-w-xs sm:max-w-sm lg:max-w-md min-w-[100px] sm:min-w-[150px] md:min-w-[200px] cursor-pointer"
+            >
             Copy invite link
-          </button>
+            </button>
 
           {/* Add by QR Code Button */}
-          <button
+            <button
             onClick={handleShowQRPopup} // Attach the click handler to open QR code popup
             className="bg-[#00A886] text-white text-xs sm:text-s md:text-base lg:text-lg rounded-lg font-nunitopy-3 sm:py-3 md:py-4 lg:py-5 w-full max-w-xs sm:max-w-sm lg:max-w-md min-w-[100px] sm:min-w-[150px] md:min-w-[200px] cursor-pointer"
-          >
+            >
             Add by QR code
-          </button>
-        </div>
-
-
-    {/* Pop-Up Notification */}
-    {showPopup && (
-      <div
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-40 bg-black text-white px-10 py-5 rounded-xl flex items-center justify-center"
-        style={{
-          width: '80%', // Use percentage for responsive width
-          maxWidth: '350px', // Set a max width
-          height: 'auto', // Allow height to adjust based on content
-          textAlign: 'center',
-          backdropFilter: 'blur(5px)', // Add blur for background
-          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)', // Shadow effect
-        }}
-      >
-        Link copied!
-      </div>
-    )}
-
-    {/* QR Code Popup with Swiping Functionality */}
-    {showQRPopup && (
-      <div
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-40 bg-black text-white px-10 py-5 rounded-xl flex flex-col items-center justify-center"
-        style={{
-          width: '80%', // Use percentage for responsive width
-          maxWidth: '300px', // Set a max width
-          height: 'auto', // Allow height to adjust based on content
-          backdropFilter: 'blur(5px)',
-          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)',
-          zIndex: 1000, // Set higher z-index for the popup
-        }}
-        {...handlers} // Adding swipe handlers
-      >
-        {activeIndex === 0 && (
-          <div className="flex flex-col items-center">
-            <h3 className="text-center" style={{ marginBottom: '1rem' }}>QR Code</h3>
-            {/* Placeholder for QR Code Image */}
-            <img
-              src="your-qr-code-url-here" // Replace with your actual QR code URL
-              alt="QR Code"
-              style={{ width: '80%', maxWidth: '200px', height: 'auto', marginBottom: '1rem' }} // Make QR code responsive
-            />
-            <div className="text-center" style={{ fontSize: '14px', marginBottom: '1.5rem' }}>
-              Swipe left to add by scanning their QR code
-            </div>
+            </button>
           </div>
-        )}
-        
-        {activeIndex === 1 && (
-          <div className="flex flex-col items-center">
-            <h3 className="text-center" style={{ marginBottom: '1rem' }}>Scanner Option</h3>
-            {/* Integrate QrScanner component here */}
-            {/* <QrScanner setScanMessage={setScanMessage} onClose={handleCloseQRPopup} /> */}
-            {scanMessage && <div className="mt-2 text-center">{scanMessage}</div>} {/* Display scan message */}
-            <div className="text-center" style={{ fontSize: '14px', marginBottom: '1.5rem' }}>
-              Point your camera at a QR code to scan
-            </div>
-          </div>
-        )}
-
-        {/* Orange Bar */}
-        <div
-          style={{
-            position: 'absolute', // Positioning it absolutely
-            top: '10px', // Position from the top
-            left: activeIndex === 0 ? '30%' : activeIndex === 1 ? '50%' : '20%', // Adjust left based on activeIndex
-            width: '50px', // Width of the orange bar
-            height: '8px', // Height of the orange bar
-            backgroundColor: '#FF6F20', // Orange color
-            borderRadius: '4px', // Optional: rounded corners
-            transition: 'left 0.3s ease', // Smooth transition for movement
-          }}
-        />
-
-        {/* Close Button */}
-        <button
-          onClick={handleCloseQRPopup}
-          style={{
-            backgroundColor: '#6B18D8',
-            color: 'white',
-            padding: '0.8rem 3rem',
-            fontSize: '14px',
-            borderRadius: '8px',
-            fontFamily: 'Montserrat, sans-serif',
-            cursor: 'pointer',
-            border: 'none',
-            width: '100%', // Make button full width
-            maxWidth: '200px', // Set a max width for the close button
-          }}
-        >
-          Close
-        </button>
-      </div>
-    )}
-  </div>
-
-
-
-  {/* Search Bar Section */}
-  <div className="flex justify-center items-center" style={{ width: '100%'}}>
+          {/* Search Bar Section */}
+        <div className="flex justify-center items-center mt-8 sm:mt-10 md:mt-10 lg:mt-12 " style={{ width: '100%', }}>
           <div style={{ position: 'relative', width: '100%', maxWidth: '500px' }}>
             <input
               type="text"
@@ -304,6 +200,27 @@ const Page = () => {
           </div>
         </div>
 
+        </div>
+
+
+      <div className="flex items-center  " >
+      {/* Pop-Up Notification */}
+      {showPopup && (
+        <CopyLinkPopup isOpen={showPopup} onClose={() => setShowPopup(false)} />
+
+      )}
+
+      {/* QR Code Popup with Swiping Functionality */}
+      {showQRPopup && (
+        <QRPopup
+          isOpen={showQRPopup}
+          onClose={handleCloseQRPopup}
+          activeIndex={activeIndex}
+          handlers={handlers}
+        />
+      )}
+  </div>
+  
 
         {/* Start Striiding Button */}
         <div className="flex justify-center" style={{marginBottom:'1rem' }}>
