@@ -1,11 +1,85 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
+import Upload from '../components/Upload';
+import Modal from 'react-modal';
+
+const urlEndpoint = process.env.NEXT_PUBLIC_URL_ENDPOINT;
+
+const authenticator = async () => {
+  try {
+    const res = await fetch("/api/upload-auth");
+
+    if (!res.ok) {
+      throw new Error("Authentication failed");
+    }
+
+    const data = await res.json();
+    const { signature, expire, token } = data;
+    return { signature, expire, token };
+  } catch (error) {
+    throw new Error("Authentication failed");
+  }
+};
+
+const handleError = (error: any) => {
+  console.log("Error uploading file:", error);
+};
 
 const Page = () => {
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const [triggerUpload, setTriggerUpload] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleCameraClick = () => {
+    setTriggerUpload(true);
+  };
+
+  const handleUploadSuccess = (imageUrl: string) => {
+    setUploadedImageUrl(imageUrl);
+    setTriggerUpload(false);
+  };
+
+  const handleUploadError = (error: any) => {
+    console.error("Upload error:", error);
+    setTriggerUpload(false);
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      try {
+        const { signature, expire, token } = await authenticator();
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('signature', signature);
+        formData.append('expire', expire.toString());
+        formData.append('token', token);
+
+        const response = await fetch(`${urlEndpoint}/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Upload failed');
+        }
+
+        const result = await response.json();
+        setUploadedImageUrl(result.url); // Assuming the response contains the URL of the uploaded image
+        console.log('File uploaded successfully:', result);
+      } catch (error) {
+        handleError(error);
+      }
+    }
+  };
   const router = useRouter();
   const { user, isLoaded } = useUser();
   const [step, setStep] = useState(1);
@@ -73,6 +147,7 @@ const Page = () => {
               occupation,
               gender,
               birthday,
+              imageUrl: uploadedImageUrl, // Add this line to include the image URL
             }),
           });
 
@@ -82,7 +157,7 @@ const Page = () => {
 
           const updatedUser = await response.json();
           console.log('User updated:', updatedUser);
-          router.push('/get-started'); // Navigate to the get-started page after successful update
+          router.push('/get-started');
         } catch (error) {
           console.error('Error updating user:', error);
           alert('An error occurred while saving your information. Please try again.');
@@ -236,14 +311,64 @@ const Page = () => {
           </div>
 
           {/* Camera icon and bio */}
-          <div className="flex justify-center mt-4">
-            <Image
-              src="/camera.svg"
-              alt="Camera icon"
-              width={100}
-              height={100}
+          <div className="flex justify-center mt-4 items-center">
+            {uploadedImageUrl ? (
+              <>
+                <Image
+                  src={uploadedImageUrl}
+                  alt="Uploaded image"
+                  width={100}
+                  height={100}
+                  onClick={openModal}
+                  className="cursor-pointer"
+                />
+                <button
+                  onClick={handleCameraClick}
+                  className="ml-4 bg-[#00A886] text-white px-4 py-2 rounded-md hover:bg-[#008c6e]"
+                >
+                  Change Image
+                </button>
+              </>
+            ) : (
+              <div onClick={handleCameraClick} className="cursor-pointer">
+                <Image
+                  src="/camera.svg"
+                  alt="Camera icon"
+                  width={100}
+                  height={100}
+                />
+              </div>
+            )}
+            <Upload
+              onSuccess={handleUploadSuccess}
+              onError={handleUploadError}
+              triggerUpload={triggerUpload}
             />
           </div>
+
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            contentLabel="Expanded Image"
+            className="flex items-center justify-center"
+            overlayClassName="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center"
+          >
+            <div className="relative">
+              <Image
+                src={uploadedImageUrl || ''}
+                alt="Expanded image"
+                width={500}
+                height={500}
+                objectFit="contain"
+              />
+              <button
+                onClick={closeModal}
+                className="absolute top-2 right-2 text-white bg-black bg-opacity-50 rounded-full p-2"
+              >
+                X
+              </button>
+            </div>
+          </Modal>
 
           {/* Bio Section */}
           <div className="mt-4 mx-4">

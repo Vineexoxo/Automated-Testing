@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { firstName, lastName, pronouns, occupation, gender, birthday } = await request.json();
+  const { firstName, lastName, pronouns, occupation, gender, birthday, imageUrl } = await request.json();
 
   try {
     // Convert birthday string to Date object
@@ -34,6 +34,7 @@ export async function POST(request: Request) {
         occupation,
         gender,
         birthday: birthdayDate, // Use the Date object here
+        imageUrl,
       },
     });
 
