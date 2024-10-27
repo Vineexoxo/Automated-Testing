@@ -65,15 +65,9 @@ const Page = () => {
     return null;
   }
 
-<<<<<<< HEAD
-  return (
-    <div className="flex flex-col items-center justify-center text-white px-4 bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] h-screen w-screen">
-      <div className="w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl flex flex-col">
-=======
 return (
   <div className="flex flex-col min-h-screen w-full bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] text-white">
     <div className="flex-grow flex flex-col px-4 py-10">
->>>>>>> newbranch
 
         <div style={{ paddingTop: '1rem' }}>
           <div className="text-center font-bold text-white text-3xl italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>Striide</div>
