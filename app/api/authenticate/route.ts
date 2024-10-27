@@ -10,20 +10,34 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const loggedInUser = await prisma.user.findUnique({
+  let loggedInUser = await prisma.user.findUnique({
     where: { clerkUserId: user.id },
   });
 
   if (!loggedInUser) {
-    await prisma.user.create({
-      data: {
-        clerkUserId: user.id,
-        name: `${user.firstName} ${user.lastName}`,
-        imageUrl: user.imageUrl,
-        email: user.emailAddresses[0].emailAddress,
-      },
+    // Check if a user with this email already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email: user.emailAddresses[0].emailAddress },
     });
+
+    if (existingUser) {
+      // If user exists with this email but different clerkUserId, update the clerkUserId
+      loggedInUser = await prisma.user.update({
+        where: { id: existingUser.id },
+        data: { clerkUserId: user.id },
+      });
+    } else {
+      // If no user exists with this email, create a new user
+      loggedInUser = await prisma.user.create({
+        data: {
+          clerkUserId: user.id,
+          name: `${user.firstName} ${user.lastName}`,
+          imageUrl: user.imageUrl,
+          email: user.emailAddresses[0].emailAddress,
+        },
+      });
+    }
   }
 
-  return NextResponse.json({ isAuth: !!userId });
+  return NextResponse.json({ isAuth: !!userId, user: loggedInUser });
 }
