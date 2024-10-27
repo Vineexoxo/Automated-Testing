@@ -6,6 +6,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/db";
 import { useUser } from '@clerk/nextjs';
 
+
 const Page = () => {
   const router = useRouter();
   const [isAuth, setIsAuth] = useState(false);
@@ -86,56 +87,8 @@ return (
 
         <div className="flex justify-end" style={{ marginBottom: '1rem', paddingRight: '1rem' }}>
           <div className="flex -space-x-8">
-            <div onClick={handleNextPage} className="cursor-pointer">
-              <svg
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="transition-transform duration-300 hover:scale-110">
-                <path
-                  d="M8 4l8 8-8 8"
-                  stroke="rgba(255, 255, 255, 0.6)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  className="transition-all duration-300" />
-              </svg>
-            </div>
+  
 
-            <div onClick={handleNextPage} className="cursor-pointer">
-              <svg
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="transition-transform duration-300 hover:scale-110">
-                <path
-                  d="M8 4l8 8-8 8"
-                  stroke="rgba(255, 255, 255, 0.8)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  className="transition-all duration-300" />
-              </svg>
-            </div>
-
-            <div onClick={handleNextPage} className="cursor-pointer">
-              <svg
-                width="60"
-                height="60"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="transition-transform duration-300 hover:scale-110">
-                <path
-                  d="M8 4l8 8-8 8"
-                  stroke="rgba(255, 255, 255, 1)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  className="transition-all duration-300" />
-              </svg>
-            </div>
 
           </div>
         </div>
