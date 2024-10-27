@@ -6,6 +6,7 @@ import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
 import Upload from '../components/Upload';
 import Modal from 'react-modal';
+import NextPageButton from '@/components/NextPageButton';
 
 const urlEndpoint = process.env.NEXT_PUBLIC_URL_ENDPOINT;
 
@@ -293,29 +294,10 @@ const Page = () => {
             </label>
           </div>
 
-          {/* Arrow icons */}
-          <div className="flex justify-end items-end absolute bottom-5 right-5 ">
-            <div className="flex -space-x-8">
-              {[0.6, 0.8, 1].map((opacity, index) => (
-                <div key={index} onClick={handleNextStep} className="cursor-pointer">
-                  <svg
-                    width="60"
-                    height="60"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="transition-transform duration-300 hover:scale-110">
-                    <path
-                      d="M8 4l8 8-8 8"
-                      stroke={`rgba(255, 255, 255, ${opacity})`}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      className="transition-all duration-300" />
-                  </svg>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Fixed Position Next Page Button */}
+      <div className="fixed bottom-4 right-4 mb-0 mr-0">
+        <NextPageButton handleNextPage={handleNextStep} />
+      </div>
         </div>
       ) : (
         <div className="flex flex-col h-full justify-center">
@@ -447,44 +429,32 @@ const Page = () => {
                     <label htmlFor="pronouns" className="text-[#F4E9E9] pl-4">Pronouns *</label>
                   </div>
                   <div className="bg-white rounded-b-md pl-4">
-                    <input
-                      id="pronouns"
-                      type="text"
-                      placeholder="ex. He/Him"
-                      value={pronouns}
-                      onChange={(e) => setPronouns(e.target.value)}
-                      className="w-full p-2 bg-transparent border-none outline-none text-black"
-                    />
+                  <select
+                  id="pronouns"
+                  value={pronouns}
+                  onChange={(e) => setPronouns(e.target.value)}
+                  className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
+                  >
+                                    <option value="" disabled>Select from the dropdown</option>
+                  <option value="male">She/Her</option>
+                  <option value="female">He/Him</option>
+                  <option value="other">They/Them</option>
+                </select>
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
+                  </svg>
+                </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Arrow Icons */}
-          <div className="flex justify-end items-end absolute bottom-5 right-5 ">
-            <div className="flex -space-x-8">
-              {[0.6, 0.8, 1].map((opacity, index) => (
-                <div key={index} onClick={handleNextStep} className="cursor-pointer">
-                  <svg
-                    width="60"
-                    height="60"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="transition-transform duration-300 hover:scale-110">
-                    <path
-                      d="M8 4l8 8-8 8"
-                      stroke={`rgba(255, 255, 255, ${opacity})`}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      className="transition-all duration-300" />
-                  </svg>
-                </div>
-              ))}
-            </div>
+          {/* Next Page Button at the Bottom */}
+          <div className="flex justify-end p-4 ">
+            <NextPageButton handleNextPage={handleNextStep} />
           </div>
-
         </div>
       )}
     </div>

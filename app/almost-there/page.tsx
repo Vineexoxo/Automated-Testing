@@ -92,7 +92,7 @@ const Page = () => {
         </div>
   
         {/* Fixed Position Next Page Button */}
-        <div className="fixed bottom-1 right-1 mb-4 mr-4">
+        <div className="fixed bottom-4 right-4 mb-0 mr-0">
           <NextPageButton handleNextPage={handleNextPage} />
         </div>
   

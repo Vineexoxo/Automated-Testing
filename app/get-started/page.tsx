@@ -1,9 +1,8 @@
 "use client"; // Add this line to mark the component as a Client Component
 
 import React from 'react';
-import { useRouter } from 'next/navigation'; // Change the import to next/navigation
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-
 
 const Page = () => {
   const router = useRouter();
@@ -13,55 +12,42 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] text-white px-0"> {/* Remove padding */}
+    <div className="flex flex-col h-screen overflow-hidden bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] text-white">
       {/* Top half container */}
-      <div className=" h-1/2 flex items-center justify-center relative">
-        <Image
-          src="/thankyou.svg"
+      <div className="flex items-center justify-center h-1/2">
+        <Image 
+          src="/thankyou.svg" // Replace with the correct path to your SVG file
           alt="Thank You"
-          height={700}
-          width={700}
-          priority
+          height={800}
+          width={2000} // Adjust width for responsiveness
+          className="max-w-full h-auto"
         />
       </div>
 
       {/* Bottom half container */}
-      <div className="w-full max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl flex flex-col items-center justify-center">
-
-        {/* Wrapper for Striide with inline style for top margin */}
-        <div style={{ paddingTop: '1rem', textAlign: 'center', marginRight: '1rem', marginLeft: '1rem' }}>
-          <div className="text-center text-white">
-            <div>
-              Your insights are invaluable. During this beta phase, we encourage you to
-              share your feedback, report any issues, and suggest improvements.
-            </div>
-            <div style={{ marginTop: '1rem' }}>
-              Together, let&apos;s empower one another!
-            </div>
-          </div>
+      <div className="flex flex-col items-center justify-center w-full max-w-xl mx-auto text-center px-4">
+        {/* Text Section */}
+        <div className="text-white font-nunito space-y-4">
+          <p>
+            Your insights are invaluable. During this beta phase, we encourage you to
+            share your feedback, report any issues, and suggest improvements.
+          </p>
+          <p>
+            Together, let's empower one another!
+          </p>
         </div>
 
-{/* Button Section */}
-            <div style={{ marginTop: '6rem', textAlign: 'center', display: 'flex', justifyContent: 'center', width: '100%' }}>
-                    <button
-                        onClick={handleNextPage} // Navigate to the profile page on click
-                        style={{
-                        backgroundColor: '#FFF6FF', // Button background color
-                        color: '#6B18D8', // Button text color
-                        padding: '1.4rem 6rem', // Padding for the button
-                        borderRadius: '8px', // Rounded corners
-                        border: 'none', // No border
-                        fontSize: '18px', // Font size
-                        fontFamily: 'Montserrat, sans-serif', // Font family
-                        cursor: 'pointer', // Pointer cursor on hover
-                        }}
-                    >
-                        Let&apos;s Striide! {/* Button text */}
-                    </button>
-                </div>
-
-            </div>
-            </div>
+        {/* Button Section */}
+        <div className="mt-16 w-full flex justify-center">
+          <button
+            onClick={handleNextPage} // Navigate to the profile page on click
+            className="bg-[#FFF6FF] text-[#6B18D8] py-4 px-10 rounded-lg text-lg font-montserrat"
+          >
+            Let's Striide!
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
