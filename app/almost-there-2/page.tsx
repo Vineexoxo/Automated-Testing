@@ -95,6 +95,30 @@ const Page = () => {
   const [lastName, setLastName] = useState('');
   const [pronouns, setPronouns] = useState('');
 
+  //bio
+  const [isBioPopupOpen, setIsBioPopupOpen] = useState(false);
+
+  //cities added
+  const [cities, setCities] = useState<string[]>([]); // Store the list of cities
+  // Function to handle adding cities from the search bar
+  const addCity = (city: string) => {
+    if (city && !cities.includes(city)) {  // Prevent duplicate entries
+      setCities([...cities, city]);
+    }
+  };
+  useEffect(() => {
+    console.log("Cities updated:", cities);
+  }, [cities]);
+
+  // Function to toggle the BioPopup
+  const toggleBioPopup = () => {
+    setIsBioPopupOpen(!isBioPopupOpen);
+  };
+
+  useEffect(() => {
+    console.log(user);
+  })
+
   useEffect(() => {
     if (isLoaded && user) {
       // Auto-fill first name and last name
