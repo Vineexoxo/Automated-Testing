@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { auth, currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/db";
 import { useUser } from '@clerk/nextjs';
+import NextPageButton from '@/components/NextPageButton';
 
 
 const Page = () => {
@@ -66,36 +67,38 @@ const Page = () => {
     return null;
   }
 
-return (
-  <div className="flex flex-col min-h-screen w-full bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] text-white">
-    <div className="flex-grow flex flex-col px-4 py-10">
-
-        <div style={{ paddingTop: '1rem' }}>
-          <div className="text-center font-bold text-white text-3xl italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>Striide</div>
-        </div>
-
-        <div style={{ marginTop: '4rem', marginLeft: '0rem', marginBottom: '5rem' }}>
-          <div className="text-6xl font-extrabold" style={{ fontFamily: 'Montserrat, sans-serif' }}>HELLO!</div>
-        </div>
-
-        <div style={{ marginTop: '1rem', marginBottom: '5rem' }}>
-          <div style={{ fontSize: '1.4rem' }}>
-            <div>We&apos;re building this for you!</div>
-            <div>Tell us a bit about yourself so we can tailor the experience to you.</div>
-          </div>
-        </div>
-
-        <div className="flex justify-end" style={{ marginBottom: '1rem', paddingRight: '1rem' }}>
-          <div className="flex -space-x-8">
+  return (
+    <div className="flex flex-col min-h-screen w-full bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] text-white">
+      <div className="flex-grow flex flex-col justify-between px-4 py-10">
   
-
-
+        {/* Striide at the top of the screen */}
+        <div className="flex-grow text-center font-bold text-white italic mt-5 text-2xl sm:text-3xl md:text-4xl lg:text-5xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+          Striide
+        </div>
+  
+        {/* HELLO! aligned to the center */}
+        <div className="flex-grow flex items-center mb-2 sm:mb-4 md:mb-4 lg:mb-4">
+          <div className="flex grow text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extrabold" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            HELLO!
           </div>
         </div>
-
+  
+        {/* Additional Text Section centered */}
+        <div className="flex-grow w-full flex items-center justify-center">
+          <div className="text-center" style={{ fontFamily: 'Nunito Sans, sans-serif' }}>
+            <p className="text-lg md:text-xl lg:text-2xl">We're building this for you!</p>
+            <p className="text-lg md:text-xl lg:text-2xl">Tell us a bit about yourself so we can tailor the experience to you.</p>
+          </div>
+        </div>
+  
+        {/* Fixed Position Next Page Button */}
+        <div className="fixed bottom-1 right-1 mb-4 mr-4">
+          <NextPageButton handleNextPage={handleNextPage} />
+        </div>
+  
       </div>
     </div>
   );
-};
-
-export default Page;
+};  
+  
+  export default Page;
