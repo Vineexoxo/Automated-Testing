@@ -1,46 +1,46 @@
-import { NextResponse } from 'next/server';
-import { auth, currentUser } from "@clerk/nextjs/server";
-import prisma from "@/lib/db";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from '@prisma/client';
 
-export async function POST(request: Request) {
-  const { userId } = auth();
-  const user = await currentUser();
+const prisma = new PrismaClient();
 
-  if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'POST') {
+    try {
+      const { firstName, lastName, pronouns, occupation, gender, birthday, imageUrl, cityEmojis } = req.body;
 
-  const { firstName, lastName, pronouns, occupation, gender, birthday, imageUrl } = await request.json();
+      // Assuming you have the user's ID from Clerk authentication
+      const clerkUserId = req.headers['x-clerk-user-id'] as string;
 
-  try {
-    // Convert birthday string to Date object
-    const birthdayDate = new Date(birthday);
+      const updatedUser = await prisma.user.update({
+        where: { clerkUserId },
+        data: {
+          firstName,
+          lastName,
+          pronouns,
+          occupation,
+          gender,
+          birthday: new Date(birthday),
+          imageUrl,
+          cityEmojis: {
+            deleteMany: {}, // Remove existing city-emoji pairs
+            create: cityEmojis.map((ce: { city: string; emoji: string }) => ({
+              city: ce.city,
+              emoji: ce.emoji,
+            })),
+          },
+        },
+        include: {
+          cityEmojis: true,
+        },
+      });
 
-    // Check if user exists in the database
-    const existingUser = await prisma.user.findUnique({
-      where: { clerkUserId: user.id },
-    });
-
-    if (!existingUser) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      console.error('Error updating user:', error);
+      res.status(500).json({ error: 'Failed to update user' });
     }
-
-    const updatedUser = await prisma.user.update({
-      where: { clerkUserId: user.id },
-      data: {
-        firstName,
-        lastName,
-        pronouns,
-        occupation,
-        gender,
-        birthday: birthdayDate, // Use the Date object here
-        imageUrl,
-      },
-    });
-
-    return NextResponse.json(updatedUser);
-  } catch (error) {
-    console.error('Error updating user:', error);
-    return NextResponse.json({ error: "Failed to update user" }, { status: 500 });
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

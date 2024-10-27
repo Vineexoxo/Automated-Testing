@@ -1,37 +1,44 @@
-// SearchBar.tsx
 import React, { useState } from 'react';
+import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 import US_States_and_Cities from '../src/assets/US_States_and_Cities.json';
 
 interface SearchBarProps {
   inputValue: string;
-  onChange: (value: string) => void;
+  emoji: string;
+  onChange: (value: string, emoji: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ inputValue, onChange }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ inputValue, emoji, onChange }) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const handleInputChange = (value: string) => {
-    onChange(value);
+    onChange(value, emoji);
 
-    // Get all city names from JSON and filter based on input
     const allCities = Object.values(US_States_and_Cities).flat();
     const filteredSuggestions = allCities.filter((city) =>
       city.toLowerCase().startsWith(value.toLowerCase())
     );
 
-    setSuggestions(value ? filteredSuggestions : []); // Show suggestions only if input is non-empty
+    setSuggestions(value ? filteredSuggestions : []);
   };
 
   const handleSuggestionClick = (city: string) => {
-    onChange(city); // Set input value to selected city
-    setSuggestions([]); // Hide suggestions after selection
+    onChange(city, emoji);
+    setSuggestions([]);
+  };
+
+  const handleEmojiClick = (emojiData: EmojiClickData) => {
+    const newEmoji = emojiData.emoji;
+    onChange(inputValue, newEmoji);
+    setShowEmojiPicker(false);
   };
 
   return (
     <div className="flex items-center w-full mt-3 relative">
-      {/* Search Input */}
       <div className="relative flex-grow">
         <input
+          id="searchInput"
           type="text"
           placeholder="City"
           value={inputValue}
@@ -42,7 +49,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ inputValue, onChange }) => {
             borderRadius: '8px',
           }}
         />
-        {/* Conditionally render magnifying glass */}
         {!inputValue && (
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <svg
@@ -63,8 +69,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ inputValue, onChange }) => {
           </div>
         )}
       </div>
-      
-      {/* Smile Button */}
+
       <div className="relative">
         <button
           className="ml-4 bg-transparent border border-gray-300 p-2 rounded-md flex justify-center items-center focus:outline-none"
@@ -73,12 +78,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ inputValue, onChange }) => {
             borderRadius: '8px',
             width: '55px',
           }}
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
         >
-          <img src="/smile.svg" alt="Smile icon" className="w-6 h-6" />
+          {emoji ? (
+            <span className="text-2xl">{emoji}</span>
+          ) : (
+            <img src="/smile.svg" alt="Smile icon" className="w-6 h-6" />
+          )}
         </button>
+        {showEmojiPicker && (
+          <div className="absolute right-0 mt-2" style={{ zIndex: 1000 }}>
+            <EmojiPicker onEmojiClick={handleEmojiClick} />
+          </div>
+        )}
       </div>
 
-      {/* Suggestions Dropdown */}
       {suggestions.length > 0 && (
         <div className="absolute top-full left-0 w-full bg-white text-black rounded-lg mt-1 z-50">
           {suggestions.map((city, index) => (

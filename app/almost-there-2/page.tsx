@@ -100,17 +100,24 @@ const Page = () => {
   //bio
   const [isBioPopupOpen, setIsBioPopupOpen] = useState(false);
 
-  //cities added
-  const [cities, setCities] = useState<string[]>([]); // Store the list of cities
-  // Function to handle adding cities from the search bar
-  const addCity = (city: string) => {
-    if (city && !cities.includes(city)) {  // Prevent duplicate entries
-      setCities([...cities, city]);
-    }
+  const [cityEmojis, setCityEmojis] = useState<{ city: string; emoji: string }[]>([]);
+
+  // Function to add a city-emoji pair
+  const addCityEmoji = (city: string, emoji: string) => {
+    setCityEmojis([...cityEmojis, { city, emoji }]);
   };
+
+  
+
   useEffect(() => {
-    console.log("Cities updated:", cities);
-  }, [cities]);
+    console.log(user);
+  }, [user]);
+  // City-Emoji pairs state
+  
+
+  useEffect(() => {
+    console.log("City-Emoji pairs updated:", cityEmojis);
+  }, [cityEmojis]);
 
   // Function to toggle the BioPopup
   const toggleBioPopup = () => {
@@ -173,7 +180,8 @@ const Page = () => {
               occupation,
               gender,
               birthday,
-              imageUrl: uploadedImageUrl, // Add this line to include the image URL
+              imageUrl: uploadedImageUrl,
+              cityEmojis, // Include the city-emoji pairs
             }),
           });
 
@@ -193,6 +201,7 @@ const Page = () => {
       }
     }
   };
+
 
   return (
     <div className="flex flex-col min-h-screen bg-[#292732] w-full text-white justify-start">
@@ -296,9 +305,9 @@ const Page = () => {
           </div>
 
           {/* Fixed Position Next Page Button */}
-      <div className="fixed bottom-4 right-4 mb-0 mr-0">
-        <NextPageButton handleNextPage={handleNextStep} />
-      </div>
+          <div className="fixed bottom-4 right-4 mb-0 mr-0">
+            <NextPageButton handleNextPage={handleNextStep} />
+          </div>
         </div>
       ) : (
         <div className="flex flex-col h-full justify-center">
@@ -379,46 +388,44 @@ const Page = () => {
 
           {/* Bio Section */}
           <div className="mt-4 mx-4">
-        {cities.length === 0 ? (
-          // When cities are empty, render the Bio button
-          <div 
-            className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2"
-            onClick={toggleBioPopup} // Open popup on click
-            style={{ color: '#FFFFFF', cursor: 'pointer' }}
-          >
-            <span className="text-lg font-semibold">Bio</span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            {cityEmojis.length === 0 ? (
+              // When cityEmojis are empty, render the Bio button
+              <div
+                className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2"
+                onClick={toggleBioPopup}
+                style={{ color: '#FFFFFF', cursor: 'pointer' }}
+              >
+                <span className="text-lg font-semibold">Bio</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            ) : (
+              // When cityEmojis are present, render the cities and plus button
+              <div className="flex justify-center items-center mt-4 gap-x-6">
+                {cityEmojis.map((cityEmoji, index) => (
+                  <span key={index} className="text-white flex items-center gap-x-1">
+                    {cityEmoji.emoji} {cityEmoji.city}
+                  </span>
+                ))}
+                <button
+                  className="text-white flex items-center justify-center bg-transparent border border-white p-2 rounded-md"
+                  onClick={toggleBioPopup}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            )}
+            {/* BioPopup Component */}
+            <BioPopup
+              isOpen={isBioPopupOpen}
+              onClose={toggleBioPopup}
+              addCityEmoji={addCityEmoji}
+              cityEmojis={cityEmojis}
+            />
           </div>
-        ) : (
-          // When cities are present, render the cities and plus button
-          <div className="flex justify-center items-center mt-4 gap-x-6">
-            {/* Render selected cities */}
-            {cities.map((city, index) => (
-              <span key={index} className="text-white flex items-center gap-x-1">
-                {city}
-                {/* You can add emojis or icons here next to cities as per your design */}
-              </span>
-            ))}
-            {/* Plus button to trigger BioPopup */}
-            <button
-              className="text-white flex items-center justify-center bg-transparent border border-white p-2 rounded-md"
-              onClick={toggleBioPopup}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          </div>
-        )}
-        {/* BioPopup Component */}
-        <BioPopup 
-          isOpen={isBioPopupOpen}   // Pass isOpen state
-          onClose={toggleBioPopup}  // Close popup on button click
-          addCity={addCity}         // Pass addCity function to BioPopup
-        />
-      </div>
 
           <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
             <div className="text-white">
@@ -463,22 +470,22 @@ const Page = () => {
                     <label htmlFor="pronouns" className="text-[#F4E9E9] pl-4">Pronouns *</label>
                   </div>
                   <div className="bg-white rounded-b-md pl-4">
-                  <select
-                  id="pronouns"
-                  value={pronouns}
-                  onChange={(e) => setPronouns(e.target.value)}
-                  className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
-                  >
-                                    <option value="" disabled>Select from the dropdown</option>
-                  <option value="male">She/Her</option>
-                  <option value="female">He/Him</option>
-                  <option value="other">They/Them</option>
-                </select>
-                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
-                  </svg>
-                </div>
+                    <select
+                      id="pronouns"
+                      value={pronouns}
+                      onChange={(e) => setPronouns(e.target.value)}
+                      className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
+                    >
+                      <option value="" disabled>Select from the dropdown</option>
+                      <option value="male">She/Her</option>
+                      <option value="female">He/Him</option>
+                      <option value="other">They/Them</option>
+                    </select>
+                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
