@@ -24,7 +24,7 @@ const Page = () => {
 
 return (
   <div className="flex flex-col min-h-screen w-full bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] text-white">
-    <div className="flex-grow flex flex-col justify-between px-4 py-10">
+    <div className="flex-grow flex flex-col px-4 py-10">
 
       {/* Striide at the top of the screen */}
       <div className="flex-grow text-center font-bold text-white talic mt-5 text-2xl sm:text-3xl md:text-4xl lg:text-5xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
