@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Upload from '../components/Upload';
 import Modal from 'react-modal';
 import NextPageButton from '@/components/NextPageButton';
+import BioPopup from '@/components/BioPopup';
 
 const urlEndpoint = process.env.NEXT_PUBLIC_URL_ENDPOINT;
 
@@ -378,13 +379,46 @@ const Page = () => {
 
           {/* Bio Section */}
           <div className="mt-4 mx-4">
-            <div className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2" style={{ color: '#FFFFFF' }}>
-              <span className="text-lg font-semibold">Bio</span>
+        {cities.length === 0 ? (
+          // When cities are empty, render the Bio button
+          <div 
+            className="border border-[#FFBF42] rounded-lg flex justify-center items-center px-4 py-2 gap-x-2"
+            onClick={toggleBioPopup} // Open popup on click
+            style={{ color: '#FFFFFF', cursor: 'pointer' }}
+          >
+            <span className="text-lg font-semibold">Bio</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        ) : (
+          // When cities are present, render the cities and plus button
+          <div className="flex justify-center items-center mt-4 gap-x-6">
+            {/* Render selected cities */}
+            {cities.map((city, index) => (
+              <span key={index} className="text-white flex items-center gap-x-1">
+                {city}
+                {/* You can add emojis or icons here next to cities as per your design */}
+              </span>
+            ))}
+            {/* Plus button to trigger BioPopup */}
+            <button
+              className="text-white flex items-center justify-center bg-transparent border border-white p-2 rounded-md"
+              onClick={toggleBioPopup}
+            >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 5V19M5 12H19" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </div>
+            </button>
           </div>
+        )}
+        {/* BioPopup Component */}
+        <BioPopup 
+          isOpen={isBioPopupOpen}   // Pass isOpen state
+          onClose={toggleBioPopup}  // Close popup on button click
+          addCity={addCity}         // Pass addCity function to BioPopup
+        />
+      </div>
 
           <div style={{ marginTop: '2rem', marginBottom: '3rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
             <div className="text-white">
