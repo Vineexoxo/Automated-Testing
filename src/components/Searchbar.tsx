@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
-import US_States_and_Cities from '../src/assets/US_States_and_Cities.json';
+import US_States_and_Cities from '../assets/US_States_and_Cities.json';
 
 interface SearchBarProps {
   inputValue: string;

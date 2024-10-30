@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SearchBar from './searchbar';
+import SearchBar from './Searchbar';
 
 interface BioPopupProps {
   isOpen: boolean;

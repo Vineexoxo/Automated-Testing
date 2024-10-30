@@ -1,4 +1,3 @@
-// components/userIcon.tsx
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
@@ -36,8 +35,8 @@ const UserIcon: React.FC<UserIconProps> = ({ user, onClick }) => {
           transition: 'fill 0.3s ease',
         }}
         onClick={handleIconClick} 
-        onMouseEnter={() => !isClicked && setIconColor('#6B18D8')} // Change color on hover if not clicked
-        onMouseLeave={() => !isClicked && setIconColor('white')} // Revert color when not hovering if not clicked
+        onMouseEnter={() => !isClicked && setIconColor('#6B18D8')} 
+        onMouseLeave={() => !isClicked && setIconColor('white')} 
       />
     </div>
   );

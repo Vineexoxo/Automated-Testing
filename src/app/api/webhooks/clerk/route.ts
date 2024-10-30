@@ -2,7 +2,7 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { clerkClient, WebhookEvent } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import prisma from "@/lib/db"; // Use the singleton instance
+import prisma from "@/src/lib/db"; // Use the singleton instance
 
 async function createUser(user: {
   clerkId: string;

@@ -95,12 +95,10 @@ const Page = () => {
   const [lastName, setLastName] = useState('');
   const [pronouns, setPronouns] = useState('');
 
-  //bio
   const [isBioPopupOpen, setIsBioPopupOpen] = useState(false);
 
   const [cityEmojis, setCityEmojis] = useState<{ city: string; emoji: string }[]>([]);
 
-  // Function to add a city-emoji pair
   const addCityEmoji = (city: string, emoji: string) => {
     setCityEmojis([...cityEmojis, { city, emoji }]);
   };
@@ -110,7 +108,6 @@ const Page = () => {
   useEffect(() => {
     console.log(user);
   }, [user]);
-  // City-Emoji pairs state
   
   useEffect(() => {
     console.log("City-Emoji pairs updated:", cityEmojis);
@@ -186,7 +183,7 @@ const Page = () => {
 
           const updatedUser = await response.json();
           console.log('User updated:', updatedUser);
-          router.push('/get-started');
+          router.push('/connect');
         } catch (error) {
           console.error('Error updating user:', error);
           alert('An error occurred while saving your information. Please try again.');
@@ -238,28 +235,20 @@ const Page = () => {
                     </div>
                   </div>
 
-                  {/* Gender Dropdown */}
+                  {/* Gender Field - Changed from select to input */}
                   <div className="bg-[#00A886] text-[#F4E9E9] rounded-lg">
                     <div className="p-2">
                       <label htmlFor="gender" className="pl-4">Gender *</label>
                     </div>
-                    <div className="bg-white rounded-b-lg relative">
-                      <select
+                    <div className="bg-white rounded-b-md pl-4">
+                      <input
                         id="gender"
+                        type="text"
+                        placeholder="Enter your gender"
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
-                        className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
-                      >
-                        <option value="" disabled>Select from the dropdown</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
-                      </select>
-                      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
-                        </svg>
-                      </div>
+                        className="w-full p-2 bg-transparent border-none outline-none text-black"
+                      />
                     </div>
                   </div>
 
@@ -458,35 +447,26 @@ const Page = () => {
                   </div>
                 </div>
 
-                {/* Pronouns Field */}
+                {/* Pronouns Field - Changed from select to input */}
                 <div className="bg-[#00A886] rounded-lg">
                   <div className="p-2">
                     <label htmlFor="pronouns" className="text-[#F4E9E9] pl-4">Pronouns *</label>
                   </div>
                   <div className="bg-white rounded-b-md pl-4">
-                    <select
+                    <input
                       id="pronouns"
+                      type="text"
+                      placeholder="Enter your pronouns"
                       value={pronouns}
                       onChange={(e) => setPronouns(e.target.value)}
-                      className="w-full p-2 bg-transparent border-none outline-none text-black pl-5 pr-8 appearance-none"
-                    >
-                      <option value="" disabled>Select from the dropdown</option>
-                      <option value="male">She/Her</option>
-                      <option value="female">He/Him</option>
-                      <option value="other">They/Them</option>
-                    </select>
-                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 10l5 5 5-5H7z" fill="#9E88B2" />
-                      </svg>
-                    </div>
+                      className="w-full p-2 bg-transparent border-none outline-none text-black"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Next Page Button at the Bottom */}
           <div className="flex justify-end p-4 ">
             <NextPageButton handleNextPage={handleNextStep} />
           </div>

@@ -13,10 +13,8 @@ export async function POST(request: Request) {
   const { firstName, lastName, pronouns, occupation, gender, birthday, imageUrl, cityEmojis } = await request.json();
 
   try {
-    // Convert birthday string to Date object
     const birthdayDate = new Date(birthday);
 
-    // Check if user exists in the database
     const existingUser = await prisma.user.findUnique({
       where: { clerkUserId: user.id },
     });
@@ -36,7 +34,7 @@ export async function POST(request: Request) {
         birthday: birthdayDate,
         imageUrl,
         cityEmojis: {
-          deleteMany: {}, // Remove existing city-emoji pairs
+          deleteMany: {}, 
           create: cityEmojis.map((ce: { city: string; emoji: string }) => ({
             city: ce.city,
             emoji: ce.emoji,
@@ -44,7 +42,7 @@ export async function POST(request: Request) {
         },
       },
       include: {
-        cityEmojis: true, // Include cityEmojis in the response
+        cityEmojis: true, 
       },
     });
 

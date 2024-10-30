@@ -8,21 +8,27 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(cuid())
-  clerkUserId String       @unique
-  email       String       @unique
-  name        String?
-  phoneNumber String?
-  firstName   String?
-  lastName    String?
-  pronouns    String?
-  occupation  String?
-  gender      String?
-  birthday    DateTime?
-  imageUrl    String?
-  cityEmojis  CityEmoji[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id                     String          @id @default(cuid())
+  clerkUserId           String          @unique
+  email                 String          @unique
+  name                  String?
+  phoneNumber           String?
+  firstName             String?
+  lastName              String?
+  pronouns              String?
+  occupation            String?
+  gender                String?
+  birthday              DateTime?
+  imageUrl              String?
+  cityEmojis            CityEmoji[]
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  // New friend-related fields
+  sentFriendRequests    FriendRequest[] @relation("SentFriendRequests")
+  receivedFriendRequests FriendRequest[] @relation("ReceivedFriendRequests")
+  friends               Friendship[]     @relation("UserFriends")
+  friendsOf             Friendship[]     @relation("FriendsOf")
+  username String?
 }
 
 model CityEmoji {
@@ -31,4 +37,28 @@ model CityEmoji {
   emoji  String
   userId String
   user   User   @relation(fields: [userId], references: [id])
+}
+
+model FriendRequest {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  status     String   @default("PENDING") // PENDING, ACCEPTED, REJECTED
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  sender     User     @relation("SentFriendRequests", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedFriendRequests", fields: [receiverId], references: [id])
+
+  @@unique([senderId, receiverId])
+}
+
+model Friendship {
+  id        String   @id @default(cuid())
+  userId    String
+  friendId  String
+  createdAt DateTime @default(now())
+  user      User     @relation("UserFriends", fields: [userId], references: [id])
+  friend    User     @relation("FriendsOf", fields: [friendId], references: [id])
+
+  @@unique([userId, friendId])
 }

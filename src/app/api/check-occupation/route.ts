@@ -11,7 +11,6 @@ export async function POST(request: Request) {
   }
 
   try {
-    // Check if user exists in the database
     const existingUser = await prisma.user.findUnique({
       where: { clerkUserId: user.id },
     });
@@ -20,7 +19,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Check if occupation exists
     const occupationExists = !!existingUser.occupation;
 
     return NextResponse.json({ occupationExists });
