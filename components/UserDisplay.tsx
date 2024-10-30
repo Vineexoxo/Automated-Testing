@@ -18,8 +18,8 @@ const UserDisplay: React.FC<UserDisplayProps> = ({ users, onIconClick, clickedUs
             listStyleType: 'none',
             padding: 0,
             height: '200px', // Fixed height for scrollable list
-            overflowY: 'scroll', // Enable vertical scrolling
-            scrollbarWidth: 'none', // Hide scrollbar for Firefox
+            overflowY: 'scroll', 
+            scrollbarWidth: 'none',
             width: '100%',
             textAlign: 'center',
           }}

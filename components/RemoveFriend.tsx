@@ -3,21 +3,21 @@ import { User } from '../models/User'
 interface RemoveFriendProps {
   onConfirm: () => void;
   onCancel: () => void;
-  user: User; // Add the user prop to display the user's name
+  user: User; 
 }
 
 const RemoveFriend: React.FC<RemoveFriendProps> = ({ onConfirm, onCancel, user }) => {
   return (
     <div style={{
-      position: 'fixed', // Position the popup fixed to the viewport
-      top: '50%', // Center vertically
-      left: '50%', // Center horizontally
-      transform: 'translate(-50%, -50%)', // Offset for exact centering
-      backgroundColor: 'rgba(255, 255, 255, 0.9)', // Semi-transparent background
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)', 
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
       padding: '20px',
       borderRadius: '8px',
       boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-      zIndex: 1000, // Ensure it appears on top
+      zIndex: 1000,
     }}>
       <p style={{ marginBottom: '1rem' }}>
         Are you sure you want to remove {user.getFullName()} as a friend?

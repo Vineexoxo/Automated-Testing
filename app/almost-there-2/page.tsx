@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
-import Upload from '../components/Upload';
+import Upload from '../../components/Upload';
 import Modal from 'react-modal';
 import NextPageButton from '@/components/NextPageButton';
 import BioPopup from '@/components/BioPopup';
@@ -112,7 +112,6 @@ const Page = () => {
   }, [user]);
   // City-Emoji pairs state
   
-
   useEffect(() => {
     console.log("City-Emoji pairs updated:", cityEmojis);
   }, [cityEmojis]);

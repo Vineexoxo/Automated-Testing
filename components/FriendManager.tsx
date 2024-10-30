@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import RemoveFriend from './RemoveFriend'; // Adjust the path as necessary
-import { User } from '../models/User'; // Adjust the import for your User type
+import RemoveFriend from './RemoveFriend'; 
+import { User } from '../models/User'; 
 
 interface FriendManagerProps {
   users: User[];
@@ -21,7 +21,7 @@ const FriendManager: React.FC<FriendManagerProps> = ({ users }) => {
   };
 
   const handleConfirmRemove = () => {
-    console.log(`Removing ${clickedUser?.getFullName()}`); // Placeholder for removing logic
+    console.log(`Removing ${clickedUser?.getFullName()}`);
     setRemovingUser(false);
     setClickedUser(null);
   };

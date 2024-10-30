@@ -1,5 +1,5 @@
 export class User {
-    // Private attributes
+
     private firstName: string;
     private lastName: string;
     private pronouns: string;
@@ -13,7 +13,7 @@ export class User {
       pronouns: string = 'they/them',
       occupation: string = 'Unemployed',
       gender: string = 'Unknown',
-      birthday: Date = new Date('2000-01-01') // Default birthday
+      birthday: Date = new Date('2000-01-01') 
     ) {
       this.firstName = firstName;
       this.lastName = lastName;
@@ -23,7 +23,7 @@ export class User {
       this.birthday = birthday;
     }
   
-    // Getter functions for each attribute
+ 
     public getFirstName(): string {
       return this.firstName;
     }
