@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import RemoveFriend from './RemoveFriend'; 
-import { User } from '../models/User'; 
+import { User } from '@prisma/client'; 
 
 interface FriendManagerProps {
   users: User[];
@@ -10,6 +10,10 @@ const FriendManager: React.FC<FriendManagerProps> = ({ users }) => {
   const [clickedUser, setClickedUser] = useState<User | null>(null);
   const [inviteSent, setInviteSent] = useState(false);
   const [removingUser, setRemovingUser] = useState(false);
+
+  const getFullName = (user: User): string => {
+    return [user.firstName, user.lastName].filter(Boolean).join(' ') || 'Unnamed User';
+  };
 
   const handleIconClick = (user: User) => {
     if (clickedUser === user) {
@@ -21,7 +25,7 @@ const FriendManager: React.FC<FriendManagerProps> = ({ users }) => {
   };
 
   const handleConfirmRemove = () => {
-    console.log(`Removing ${clickedUser?.getFullName()}`);
+    console.log(`Removing ${clickedUser ? getFullName(clickedUser) : 'user'}`);
     setRemovingUser(false);
     setClickedUser(null);
   };
@@ -46,9 +50,9 @@ const FriendManager: React.FC<FriendManagerProps> = ({ users }) => {
             }}
           >
             {users.length > 0 ? (
-              users.map((user, index) => (
+              users.map((user) => (
                 <li
-                  key={index}
+                  key={user.id}
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -57,7 +61,7 @@ const FriendManager: React.FC<FriendManagerProps> = ({ users }) => {
                     textAlign: 'center',
                   }}
                 >
-                  <span style={{ marginRight: '8px' }}>{user.getFullName()}</span>
+                  <span style={{ marginRight: '8px' }}>{getFullName(user)}</span>
                   <img
                     src={clickedUser === user ? "/add-friend-filled.svg" : "/userIcon.svg"}
                     alt="User Icon"

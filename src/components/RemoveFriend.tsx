@@ -1,18 +1,23 @@
 import React from 'react';
-import { User } from '../models/User'
+import { User } from '@prisma/client';
+
 interface RemoveFriendProps {
   onConfirm: () => void;
   onCancel: () => void;
-  user: User; 
+  user: User;
 }
 
 const RemoveFriend: React.FC<RemoveFriendProps> = ({ onConfirm, onCancel, user }) => {
+  const getFullName = (user: User): string => {
+    return [user.firstName, user.lastName].filter(Boolean).join(' ') || 'Unnamed User';
+  };
+
   return (
     <div style={{
       position: 'fixed',
       top: '50%',
       left: '50%',
-      transform: 'translate(-50%, -50%)', 
+      transform: 'translate(-50%, -50%)',
       backgroundColor: 'rgba(255, 255, 255, 0.9)',
       padding: '20px',
       borderRadius: '8px',
@@ -20,7 +25,7 @@ const RemoveFriend: React.FC<RemoveFriendProps> = ({ onConfirm, onCancel, user }
       zIndex: 1000,
     }}>
       <p style={{ marginBottom: '1rem' }}>
-        Are you sure you want to remove {user.getFullName()} as a friend?
+        Are you sure you want to remove {getFullName(user)} as a friend?
       </p>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <button onClick={onConfirm} style={{
