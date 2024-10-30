@@ -15,8 +15,6 @@ const Page = () => {
 
   useEffect(() => {
     if (isLoaded && user) {
-
-      // Check if occupation exists and redirect if it does
       const checkOccupation = async () => {
         try {
           const response = await fetch('/api/check-occupation', {

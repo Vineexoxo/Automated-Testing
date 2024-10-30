@@ -75,7 +75,7 @@ const Page = () => {
         }
 
         const result = await response.json();
-        setUploadedImageUrl(result.url); // Assuming the response contains the URL of the uploaded image
+        setUploadedImageUrl(result.url); 
         console.log('File uploaded successfully:', result);
       } catch (error) {
         handleError(error);
@@ -86,13 +86,11 @@ const Page = () => {
   const { user, isLoaded } = useUser();
   const [step, setStep] = useState(1);
 
-  // State for almost-there-2 fields
   const [occupation, setOccupation] = useState('');
   const [gender, setGender] = useState('');
   const [birthday, setBirthday] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
-  // State for build-profile fields
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [pronouns, setPronouns] = useState('');
@@ -119,7 +117,7 @@ const Page = () => {
     console.log("City-Emoji pairs updated:", cityEmojis);
   }, [cityEmojis]);
 
-  // Function to toggle the BioPopup
+
   const toggleBioPopup = () => {
     setIsBioPopupOpen(!isBioPopupOpen);
   };
@@ -130,11 +128,9 @@ const Page = () => {
 
   useEffect(() => {
     if (isLoaded && user) {
-      // Auto-fill first name and last name
       setFirstName(user.firstName ?? '');
       setLastName(user.lastName ?? '');
 
-      // Check if occupation exists and redirect if it does
       const checkOccupation = async () => {
         try {
           const response = await fetch('/api/check-occupation', {
@@ -181,7 +177,7 @@ const Page = () => {
               gender,
               birthday,
               imageUrl: uploadedImageUrl,
-              cityEmojis, // Include the city-emoji pairs
+              cityEmojis,
             }),
           });
 
@@ -214,7 +210,6 @@ const Page = () => {
             </div>
           </div>
 
-          {/* Subheading Section */}
           <div className="mt-5 w-full">
             <div className="text-white text-center">
               <div>Tell Us About Yourself!</div>
