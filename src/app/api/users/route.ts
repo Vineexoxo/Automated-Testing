@@ -2,10 +2,48 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db"; // Make sure this points to your Prisma client
 
+/**
+    * @swagger
+    * /api/users:
+    *   get:
+    *     summary: Retrieve a list of users
+    *     description: Get all users except the current authenticated user.
+    *     responses:
+    *       200:
+    *         description: A list of users.
+    *         content:
+    *           application/json:
+    *             schema:
+    *               type: object
+    *               properties:
+    *                 users:
+    *                   type: array
+    *                   items:
+    *                     type: object
+    *                     properties:
+    *                       id:
+    *                         type: string
+    *                       firstName:
+    *                         type: string
+    *                       lastName:
+    *                         type: string
+    *                       imageUrl:
+    *                         type: string
+    *                       occupation:
+    *                         type: string
+    *                       username:
+    *                         type: string
+    *       401:
+    *         description: Unauthorized
+    *       404:
+    *         description: User not found
+    *       500:
+    *         description: Internal server error
+    */
 export async function GET() {
   try {
     const { userId } = auth();
-    
+
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }

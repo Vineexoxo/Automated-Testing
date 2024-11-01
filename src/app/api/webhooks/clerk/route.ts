@@ -4,6 +4,20 @@ import { clerkClient, WebhookEvent } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db"; // Use the singleton instance
 
+/**
+ * @swagger
+ * /api/webhooks/clerk:
+ *   post:
+ *     summary: Handle Clerk webhooks
+ *     description: Processes webhooks from Clerk and updates user data accordingly.
+ *     responses:
+ *       200:
+ *         description: Webhook processed successfully.
+ *       400:
+ *         description: Error occurred during webhook processing.
+ *       500:
+ *         description: Server configuration error
+ */
 async function createUser(user: {
   clerkId: string;
   email: string;

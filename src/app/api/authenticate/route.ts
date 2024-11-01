@@ -2,6 +2,36 @@ import { NextResponse } from 'next/server';
 import { auth, currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/db";
 
+/**
+ * @swagger
+ * /api/authenticate:
+ *   get:
+ *     summary: Authenticate user
+ *     description: Authenticates the user and returns user details.
+ *     responses:
+ *       200:
+ *         description: User authenticated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 isAuth:
+ *                   type: boolean
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     imageUrl:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *       401:
+ *         description: Unauthorized
+ */
 export async function GET() {
   const { userId } = auth();
   const user = await currentUser();
@@ -15,19 +45,16 @@ export async function GET() {
   });
 
   if (!loggedInUser) {
-    // Check if a user with this email already exists
     const existingUser = await prisma.user.findUnique({
       where: { email: user.emailAddresses[0].emailAddress },
     });
 
     if (existingUser) {
-      // If user exists with this email but different clerkUserId, update the clerkUserId
       loggedInUser = await prisma.user.update({
         where: { id: existingUser.id },
         data: { clerkUserId: user.id },
       });
     } else {
-      // If no user exists with this email, create a new user
       loggedInUser = await prisma.user.create({
         data: {
           clerkUserId: user.id,

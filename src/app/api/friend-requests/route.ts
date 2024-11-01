@@ -2,6 +2,47 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 
+/**
+ * @swagger
+ * /api/friend-requests:
+ *   post:
+ *     summary: Send a friend request
+ *     description: Sends a friend request from the authenticated user to another user.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               receiverId:
+ *                 type: string
+ *                 description: The ID of the user to send the friend request to.
+ *     responses:
+ *       200:
+ *         description: Friend request sent successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 senderId:
+ *                   type: string
+ *                 receiverId:
+ *                   type: string
+ *                 status:
+ *                   type: string
+ *       400:
+ *         description: Friend request already exists.
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
 export async function POST(req: Request) {
   try {
     const { userId } = auth();
@@ -47,4 +88,4 @@ export async function POST(req: Request) {
     console.error("[FRIEND_REQUEST_POST]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
-} 
+}
