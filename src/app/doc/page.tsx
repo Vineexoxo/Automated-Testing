@@ -1,5 +1,5 @@
 import { getApiDocs } from "../../../lib/swagger";
-import ReactSwagger from './react-swagger';
+import ReactSwagger from '../../components/react-swagger';
 import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/db"; // Ensure this points to your Prisma client
 import { redirect } from 'next/navigation';
