@@ -2,6 +2,8 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db"; // Ensure this points to your Prisma client
 
+export const dynamic = 'force-dynamic'; // Mark the route as dynamic
+
 /**
  * @swagger
  * /api/admin/read-user:
@@ -74,10 +76,10 @@ export async function GET() {
 
         // Find the authenticated user
         const authUser = await prisma.user.findUnique({
-            where: { id: userId },
+            where: { clerkUserId: userId },
         });
 
-        if (!authUser || authUser.role !== 'ADMIN') {
+        if (!authUser) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
