@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (router.pathname === "/") {
+    if (pathname === "/") {
       const timer = setTimeout(() => {
         setIsLoading(false);
       }, 3000);
@@ -17,7 +17,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     } else {
       setIsLoading(false);
     }
-  }, [router.pathname]);
+  }, [pathname]);
 
   return (
     <>
