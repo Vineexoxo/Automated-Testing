@@ -2,6 +2,8 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db"; // Make sure this points to your Prisma client
 
+export const dynamic = 'force-dynamic'; // Mark the route as dynamic
+
 export async function GET() {
   try {
     const { userId } = auth();
