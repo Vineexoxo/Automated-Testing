@@ -14,4 +14,4 @@ const nextConfig = {
   output: 'standalone', // Ensure standalone output for server-side features
 };
 
-module.exports = nextConfig;
+export default nextConfig;
