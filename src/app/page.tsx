@@ -3,6 +3,12 @@ import React from "react";
 import Link from "next/link";
 import { useAuth, SignOutButton } from "@clerk/nextjs";
 
+/**
+ * Home component that serves as the landing page for the Striide application.
+ * Displays a welcome message and provides navigation options based on the user's authentication status.
+ *
+ * @returns {JSX.Element} The rendered Home component.
+ */
 export default function Home() {
   const { isSignedIn } = useAuth();
 

@@ -1,40 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 
-/**
- * @swagger
- * /api/upload-auth:
- *   get:
- *     summary: Generate upload authentication token
- *     description: Generates a token and signature for upload authentication.
- *     parameters:
- *       - in: query
- *         name: token
- *         schema:
- *           type: string
- *         description: Optional token for authentication.
- *       - in: query
- *         name: expire
- *         schema:
- *           type: string
- *         description: Optional expiration time for the token.
- *     responses:
- *       200:
- *         description: Authentication token generated successfully.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 token:
- *                   type: string
- *                 expire:
- *                   type: string
- *                 signature:
- *                   type: string
- *       500:
- *         description: Server configuration error
- */
 const privateKey = process.env.PRIVATE_KEY;
 
 export async function GET(request: Request) {
