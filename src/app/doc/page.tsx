@@ -35,7 +35,7 @@ export default async function IndexPage() {
     const spec = await getApiDocs();
     return (
         <section 
-            className="w-screen h-screen bg-white text-black absolute top-0 left-0"
+            className="w-screen bg-white text-black absolute top-0 left-0"
         >
             <ReactSwagger spec={spec} />
         </section>
