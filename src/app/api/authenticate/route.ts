@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { auth, currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/db";
 
+export const dynamic = 'force-dynamic'; // Mark the route as dynamic
+
+
 
 export async function GET() {
   const { userId } = auth();

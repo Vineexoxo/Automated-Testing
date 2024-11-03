@@ -1,6 +1,10 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic'; // Mark the route as dynamic
+
+
+
 
 export async function GET() {
   const { userId } = auth();

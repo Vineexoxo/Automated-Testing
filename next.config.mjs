@@ -8,9 +8,10 @@ const nextConfig = {
       },
     ],
   },
-    eslint: {
-      ignoreDuringBuilds: true,
-    },
-  };
-  
-  export default nextConfig;
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  output: 'standalone', // Ensure standalone output for server-side features
+};
+
+export default nextConfig;
