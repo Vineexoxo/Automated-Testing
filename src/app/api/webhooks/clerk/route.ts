@@ -4,7 +4,62 @@ import { clerkClient, WebhookEvent } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db"; // Use the singleton instance
 
-
+/**
+ * @swagger
+ * /api/webhooks/clerk:
+ *   post:
+ *     summary: Handle Clerk webhooks
+ *     description: Processes webhooks from Clerk, such as user creation events.
+ *     responses:
+ *       200:
+ *         description: Webhook processed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                     firstName:
+ *                       type: string
+ *                     lastName:
+ *                       type: string
+ *                     imageUrl:
+ *                       type: string
+ *       400:
+ *         description: Bad request due to missing headers or verification failure
+ *       500:
+ *         description: Server error due to configuration or processing issues
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 details:
+ *                   type: string
+ *     examples:
+ *       application/json:
+ *         200:
+ *           message: "New user created"
+ *           user:
+ *             id: "123"
+ *             email: "user@example.com"
+ *             firstName: "John"
+ *             lastName: "Doe"
+ *             imageUrl: "http://example.com/image.jpg"
+ *         500:
+ *           error: "Database error"
+ *           details: "Error creating user in database"
+ */
 
 async function createUser(user: {
   clerkId: string;
@@ -26,7 +81,7 @@ async function createUser(user: {
       },
     });
   } catch (error) {
-    console.error("Error creating user in database:", error);
+    console.error("[WEBHOOK] Error creating user in database:", error);
     throw new Error("Database error");
   }
 }
@@ -35,8 +90,8 @@ export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
-    console.error("WEBHOOK_SECRET is not set");
-    return new Response("Server configuration error", { status: 500 });
+    console.error("[WEBHOOK] WEBHOOK_SECRET is not set");
+    return NextResponse.json({ error: "Configuration error", details: "WEBHOOK_SECRET is not set" }, { status: 500 });
   }
 
   const headerPayload = headers();
@@ -45,8 +100,8 @@ export async function POST(req: Request) {
   const svix_signature = headerPayload.get("svix-signature");
 
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    console.error("Missing Svix headers");
-    return new Response("Error occurred -- no svix headers", { status: 400 });
+    console.error("[WEBHOOK] Missing Svix headers");
+    return NextResponse.json({ error: "Bad request", details: "Missing Svix headers" }, { status: 400 });
   }
 
   const payload = await req.json();
@@ -63,8 +118,9 @@ export async function POST(req: Request) {
       "svix-signature": svix_signature,
     }) as WebhookEvent;
   } catch (err) {
-    console.error("Error verifying webhook:", err);
-    return new Response("Error occurred", { status: 400 });
+    const error = err as Error; // Type assertion
+    console.error("[WEBHOOK] Error verifying webhook:", error);
+    return NextResponse.json({ error: "Verification failed", details: error.message }, { status: 400 });
   }
 
   const { id } = evt.data;
@@ -82,7 +138,7 @@ export async function POST(req: Request) {
       lastName: last_name || "DefaultLastName",
     };
 
-    console.log("Creating user:", user);
+    console.log("[WEBHOOK] Creating user:", user);
 
     try {
       const newUser = await createUser(user);
@@ -95,15 +151,16 @@ export async function POST(req: Request) {
         });
       }
 
+      console.info("[WEBHOOK] New user created successfully");
       return NextResponse.json({ message: "New user created", user: newUser });
     } catch (error) {
-      console.error("Error processing user creation:", error);
-      return new Response("Error processing user creation", { status: 500 });
+      console.error("[WEBHOOK] Error processing user creation:", error);
+      return NextResponse.json({ error: "Database error", details: "Error creating user in database" }, { status: 500 });
     }
   }
 
-  console.log(`Webhook with an ID of ${id} and type of ${eventType}`);
-  console.log("Webhook body:", body);
+  console.log(`[WEBHOOK] Webhook with an ID of ${id} and type of ${eventType}`);
+  console.log("[WEBHOOK] Webhook body:", body);
 
   return new Response("", { status: 200 });
 }

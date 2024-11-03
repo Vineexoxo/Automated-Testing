@@ -2,7 +2,6 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db"; // Ensure this points to your Prisma client
 
-
 /**
  * @swagger
  * /api/admin/read-user:
@@ -62,6 +61,44 @@ import prisma from "@/lib/db"; // Ensure this points to your Prisma client
  *         description: Unauthorized
  *       500:
  *         description: Internal Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 details:
+ *                   type: string
+ *     examples:
+ *       application/json:
+ *         200:
+ *           users: [
+ *             {
+ *               "id": "123",
+ *               "clerkUserId": "clerk_123",
+ *               "email": "user@example.com",
+ *               "name": "John Doe",
+ *               "phoneNumber": "1234567890",
+ *               "firstName": "John",
+ *               "lastName": "Doe",
+ *               "pronouns": "he/him",
+ *               "occupation": "Engineer",
+ *               "gender": "male",
+ *               "birthday": "1990-01-01T00:00:00Z",
+ *               "imageUrl": "http://example.com/image.jpg",
+ *               "username": "johndoe",
+ *               "cityEmojis": [
+ *                 {
+ *                   "city": "New York",
+ *                   "emoji": "🗽"
+ *                 }
+ *               ]
+ *             }
+ *           ]
+ *         500:
+ *           error: "Database error"
+ *           details: "Error retrieving users from database"
  */
 
 // Read user data
@@ -70,6 +107,7 @@ export async function GET() {
         const { userId } = auth();
 
         if (!userId) {
+            console.warn("[USERS_GET] Unauthorized access attempt");
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
@@ -79,6 +117,7 @@ export async function GET() {
         });
 
         if (!authUser) {
+            console.warn("[USERS_GET] Authenticated user not found");
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
@@ -102,9 +141,10 @@ export async function GET() {
             }
         });
 
+        console.info("[USERS_GET] Users retrieved successfully");
         return NextResponse.json({ users });
     } catch (error) {
-        console.error("[USERS_GET]", error);
-        return new NextResponse("Internal Error", { status: 500 });
+        console.error("[USERS_GET] Internal Error", error);
+        return NextResponse.json({ error: "Database error", details: "Error retrieving users from database" }, { status: 500 });
     }
 }
