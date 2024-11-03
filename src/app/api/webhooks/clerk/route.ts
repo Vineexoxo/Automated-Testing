@@ -4,7 +4,6 @@ import { clerkClient, WebhookEvent } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db"; // Use the singleton instance
 
-export const dynamic = 'force-dynamic'; // Mark the route as dynamic
 
 
 async function createUser(user: {

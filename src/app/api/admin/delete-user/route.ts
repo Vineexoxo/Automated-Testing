@@ -2,7 +2,6 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db"; // Ensure this points to your Prisma client
 
-export const dynamic = 'force-dynamic'; // Mark the route as dynamic
 
 
 /**
