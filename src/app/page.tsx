@@ -10,7 +10,7 @@ import { useAuth, SignOutButton } from "@clerk/nextjs";
  * @returns {JSX.Element} The rendered Home component.
  */
 export default function Home() {
-  // const { isSignedIn } = useAuth();
+  const { isSignedIn } = useAuth();
 
   return (
     <div className="bg-gradient-to-tr from-[#3A00A4] to-[#802EE8] min-h-screen w-full flex flex-col items-center justify-center text-white px-4">
@@ -26,7 +26,7 @@ export default function Home() {
         </p>
       </div>
       <div className="w-full max-w-sm flex flex-col gap-4">
-        {/* {isSignedIn ? (
+        {isSignedIn ? (
           <>
             <Link href="/connect" className="bg-white text-[#5044F1] font-semibold py-2 rounded-lg text-center">
               Go to Connect
@@ -38,15 +38,15 @@ export default function Home() {
             </SignOutButton>
           </>
         ) : (
-          <> */}
+          <>
             <Link href="/sign-up" className="bg-white text-[#5044F1] font-semibold py-2 rounded-lg text-center">
               Sign up
             </Link>
             <Link href="/sign-in" className="border border-white text-white font-semibold py-2 rounded-lg text-center">
               Log in
             </Link>
-          {/* </>
-        )} */}
+          </>
+        )}
       </div>
     </div>
   );
