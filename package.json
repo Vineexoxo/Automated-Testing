@@ -27,6 +27,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-modal": "^3.16.1",
+    "striide-authentication": "file:",
     "svix": "^1.25.0",
     "swagger-ui-react": "^5.17.14"
   },
