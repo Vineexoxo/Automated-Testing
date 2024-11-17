@@ -51,24 +51,25 @@ test('it should render Striide, Sign up, and Log in texts sequentially', () => {
     expect(logInText).toBeInTheDocument();
   });
 
-  test('renders Sign up and Log in when not signed in', () => {
-    useAuth.mockImplementation(() => ({
-      isSignedIn: false,
-    }));
-  
-    render(<Home />);
-  
-    expect(screen.getByText('Sign up')).toBeInTheDocument();
-    expect(screen.getByText('Log in')).toBeInTheDocument();
-  });
-  
-  test('renders Go to Connect and Log out when signed in', () => {
-    useAuth.mockImplementation(() => ({
-      isSignedIn: true,
-    }));
-  
-    render(<Home />);
-  
-    expect(screen.getByText('Go to Connect')).toBeInTheDocument();
-    expect(screen.getByText('Log out')).toBeInTheDocument();
-  });
+test('renders Sign up and Log in when not signed in', () => {
+  useAuth.mockImplementation(() => ({
+    isSignedIn: false,
+  }));
+
+  render(<Home />);
+
+  expect(screen.getByText('Sign up')).toBeInTheDocument();
+  expect(screen.getByText('Log in')).toBeInTheDocument();
+});
+
+test('renders Go to Connect and Log out when signed in', () => {
+  useAuth.mockImplementation(() => ({
+    isSignedIn: true,
+  }));
+
+  render(<Home />);
+
+  expect(screen.getByText('Go to Connect')).toBeInTheDocument();
+  expect(screen.getByText('Log out')).toBeInTheDocument();
+});
+
