@@ -1,0 +1,30 @@
+[+] ExpoSE /home/vineet/Desktop/testing/Automated-Testing/SymbolicExecution/clerk.js concurrent: 8 timeout: 7200000 per-test: 2400000
+[-] [0 done /0 queued / 1 running / 0 errors / 0% coverage ] ***[1000D[0K[\] [0 done /0 queued / 1 running / 0 errors / 0% coverage ] ***[1000D[0K[|] [1 done /2 queued / 1 running / 0 errors / 30% coverage ] ***[1000D[0K[/] [1 done /1 queued / 2 running / 0 errors / 30% coverage ] ***[1000D[0K[-] [1 done /0 queued / 3 running / 0 errors / 30% coverage ] ***[1000D[0K[\] [1 done /0 queued / 3 running / 0 errors / 30% coverage ] ***[1000D[0K[|] [2 done /0 queued / 2 running / 0 errors / 30% coverage ] ***[1000D[0K[/] [3 done /0 queued / 1 running / 0 errors / 30% coverage ] ***[1000D[0K[-] [4 done /1 queued / 1 running / 0 errors / 38% coverage ] ***[1000D[0K[\] [4 done /0 queued / 2 running / 0 errors / 38% coverage ] ***[1000D[0K[|] [4 done /0 queued / 2 running / 0 errors / 38% coverage ] ***[1000D[0K[/] [5 done /0 queued / 1 running / 0 errors / 41% coverage ] ***[1000D[0K[-] [6 done /0 queued / 1 running / 0 errors / 41% coverage ] ***[1000D[0K[\] [6 done /0 queued / 1 running / 0 errors / 41% coverage ] ***[1000D[0K[|] [7 done /0 queued / 0 running / 0 errors / 41% coverage ] ***
+[+] {"_bound":0,"username":"symbolic_username","password":"symbolic_password","signup_result":"symbolic_signup_result"} took 1.148s
+[+] {"username":"","password":"","signup_result":"","_bound":6} took 0.587s
+[+] {"username":"0wDÃ","password":"g7W_1x:P","signup_result":"","_bound":12} took 0.587s
+[+] {"username":"1_:FpR0K","password":"wqb7PW`x","signup_result":"OK","_bound":17,"login_result":"symbolic_login_result"} took 0.775s
+[+] {"username":"1_:FpR0K","password":"6FF[0RF[","signup_result":"OK","login_result":"OK","_bound":22} took 0.53s
+[+] {"username":"=6<g=?F0","password":"B?0xZ73w","signup_result":"OK","login_result":"","_bound":18} took 0.625s
+[+] {"username":"=6<g=?F0","password":"pg??@A5w","signup_result":"OK","login_result":"OK","_bound":22} took 0.465s
+[!] Stats
+[+] General Function Call: 131
+[+] Symbolic Values: 23
+[+] Symbolic Primitives: 23
+[+] Wrapped Constants: 60
+[+] Symbolic Field: 23
+[+] Modeled Function Call: {"#match":13}
+[+] Regex Encoded: 13
+[+] Regex Which May Need Checks: 13
+[+] Symbolic Binary: 45
+[+] Symbolic Unary: 18
+[+] Regex Checks: 20
+[+] Max Queries (Any): 1
+[+] Max Queries (Succesful): 1
+[+] Failed Queries: 10
+[!] Done
+[+] /home/vineet/Desktop/testing/Automated-Testing/SymbolicExecution/clerk.js. Coverage (Term): 98% Coverage (Decisions): 67% Coverage (LOC): 100% Lines Of Code: 51 -*
+[+] Total Lines Of Code 51
+[+] Total Coverage: 1%
+[+] EXPOSE_PRINT_COVERAGE=1 for line by line breakdown
+[+] ExpoSE Finished. 7 paths, 0 errors
