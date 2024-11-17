@@ -20,11 +20,14 @@ fs.readFile('map.txt', 'utf8', (err, data) => {
         }
     });
 
-    // Remove the first index of paths array
-    paths.shift();  // This removes the first element from the array
-
+    
     console.log("Parsed paths:", paths);
+    // Save the paths array to a JSON file
+    fs.writeFile('paths.json', JSON.stringify(paths, null, 2), (writeErr) => {
+        if (writeErr) {
+            console.error("Error writing to paths.json:", writeErr);
+        } else {
+            console.log("Paths successfully saved to paths.json");
+        }
+    });
 });
-
-// Export the paths array without the first element
-module.exports = { paths };

@@ -1,0 +1,51 @@
+[
+  {
+    "_bound": 0,
+    "username": "symbolic_username",
+    "password": "symbolic_password",
+    "signup_result": "symbolic_signup_result"
+  },
+  {
+    "username": "(4ä",
+    "password": "\\\\<2V00>Z",
+    "signup_result": "",
+    "_bound": 12
+  },
+  {
+    "username": "",
+    "password": "",
+    "signup_result": "",
+    "_bound": 6
+  },
+  {
+    "username": "of=G8=?L",
+    "password": "@9A<7DS6",
+    "signup_result": "OK",
+    "_bound": 17,
+    "login_result": "symbolic_login_result"
+  },
+  {
+    "username": "of=G8=?L",
+    "password": "C:07wFd4",
+    "signup_result": "OK",
+    "login_result": "OK",
+    "_bound": 22
+  },
+  {
+    "username": "?F7pA800",
+    "password": "x0t0tW7x",
+    "signup_result": "OK",
+    "login_result": "",
+    "_bound": 18
+  },
+  {
+    "username": "?F7pA800",
+    "password": "38G?Yox0",
+    "signup_result": "OK",
+    "login_result": "OK",
+    "_bound": 22
+  },
+  {
+    "#match": 13
+  }
+]
